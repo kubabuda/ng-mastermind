@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng b --prod --base-href /ng-mastermind/ && npx ngh --dir=dist/ng-mastermind/"
+    "deploy": "ng b --prod --base-href https://kubabuda.github.io/ng-mastermind/ && npx ngh --dir=dist/ng-mastermind/"
   },
   "private": true,
   "dependencies": {

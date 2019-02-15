@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MastermindComponent } from './mastermind/mastermind/mastermind.component';
+import { MastermindComponent } from './mastermind/components/mastermind/mastermind.component';
 
 const routes: Routes = [
   { path: '', component: MastermindComponent, pathMatch: 'full' },

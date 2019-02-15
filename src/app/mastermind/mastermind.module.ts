@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MastermindComponent } from './mastermind/mastermind.component';
+import { MastermindComponent } from './components/mastermind/mastermind.component';
+import { RoundStateComponent } from './components/round-state/round-state.component';
 
 @NgModule({
-  declarations: [MastermindComponent],
+  declarations: [MastermindComponent, RoundStateComponent],
   imports: [
     CommonModule
   ]

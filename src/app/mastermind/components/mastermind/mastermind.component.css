@@ -1,7 +1,27 @@
+.button-row {
+  margin: auto;
+  width: 50%;
+}
+
 .button-row button,
 .button-row a {
   margin-right: 8px;
-}.button-row button,
-.button-row a {
-  margin-right: 8px;
+}
+
+ngc-float-button  {
+  bottom: 20px;
+  right: 20px;
+  position: absolute;
+}
+
+/* BIGGER ? */
+
+ngc-float-button /deep/ .content {
+margin-right: 55px;
+}
+
+ngc-float-button /deep/ .fab-toggle,
+ngc-float-button /deep/ .fab-item,
+ngc-float-button /deep/ .content {
+transform: scale(1.1);
 }

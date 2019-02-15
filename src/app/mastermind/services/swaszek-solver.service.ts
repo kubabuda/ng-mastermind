@@ -22,12 +22,19 @@ export class SwaszekSolverService implements ISolveMastermind  {
 
   getNextGuess(prevRoundCheck: IRoundModel): string {
     ++this.round;
+    let result = '';
     if (this.round === 1) {
-      return this.getInitialGuess();
+      result = this.getInitialGuess();
     } else {
       this.keys = this.prunedKeys(this.keys, prevRoundCheck);
-      return this.keys[0];
+      if (this.keys !== null && this.keys !== [] && this.keys.length > 0) {
+        result = this.keys[0];
+      } else {
+        throw new error('No keys left in solver!');
+      }
     }
+
+    return result;
   }
 
   getInitialGuess(): string {

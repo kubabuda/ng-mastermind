@@ -67,6 +67,15 @@ describe('SwaszekSolverService', () => {
       expect(initialGuess).toBe('2345');
       expect(serviceUnderTest.round).toBe(1);
     });
+
+    it('should return prev answer if was valid for MM(4,6)', () => {
+      // arrange
+      const prevCheck = { whitePts: 4, blackPts: 0, answer: '1111' };
+      // act
+      const guess = serviceUnderTest.getNextGuess(prevCheck);
+      // assert
+      expect(guess).toBe('1111');
+    });
   });
 
   describe('checkAnswer', () => {
@@ -138,4 +147,11 @@ describe('SwaszekSolverService', () => {
       });
     });
   });
+
+  // describe('E2E solver test', () => {
+  //   const answerToGuess = '1122';
+  //   for (let i = 0; i < 8; ++i) {
+
+  //   }
+  // });
 });

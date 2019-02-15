@@ -13,7 +13,7 @@ import { IGameSettings, GameSettings } from '../../models/game.settings.model';
 export class MastermindComponent implements OnInit {
 
   roundModelViews: IRoundModelView[];
-  lastRound: IRoundModel;
+  currentRound: IRoundModel;
 
   round = 0;
   private settings: IGameSettings;
@@ -31,51 +31,51 @@ export class MastermindComponent implements OnInit {
     this.round = 0;
     this.solver = new SwaszekSolverService(this.settings);
     this.roundModelViews = [];
-    this.lastRound = this.getNextRound();
+    this.currentRound = this.getNextRound();
     this.cleanScore();
   }
 
   incrementWhite(): void {
-    if (this.IsWhitePtsIncrementable(this.lastRound, this.settings)) {
-      this.lastRound.whitePts += 1;
+    if (this.IsWhitePtsIncrementable(this.currentRound, this.settings)) {
+      this.currentRound.whitePts += 1;
       this.updateLastRoundView();
     }
   }
 
   incrementBlack(): void {
-    if (this.IsBlackPtsIncrementable(this.lastRound, this.settings)) {
-      this.lastRound.blackPts += 1;
+    if (this.IsBlackPtsIncrementable(this.currentRound, this.settings)) {
+      this.currentRound.blackPts += 1;
       this.updateLastRoundView();
     }
   }
 
   cleanScore(): void {
-    this.lastRound.whitePts = 0;
-    this.lastRound.blackPts = 0;
+    this.currentRound.whitePts = 0;
+    this.currentRound.blackPts = 0;
     this.updateLastRoundView();
   }
 
   checkScore(): void {
-    this.roundModelViews.push(this.getUpdatedLastRoundView());
-    this.lastRound = this.getNextRound();
+    this.roundModelViews.push(this.getCurrentRoundView());
+    this.currentRound = this.getNextRound();
     this.updateLastRoundView();
     // todo check if win, if yes:
     // let snackBarRef = snackBar.open('Bravo', 'OK');
     // newGame()
   }
 
-  private getUpdatedLastRoundView(): IRoundModelView {
-    return new RoundModelView(this.lastRound);
+  private getCurrentRoundView(): IRoundModelView {
+    return new RoundModelView(this.currentRound);
   }
 
   private updateLastRoundView() {
     this.roundModelViews.pop();
-    this.roundModelViews.push(this.getUpdatedLastRoundView());
+    this.roundModelViews.push(this.getCurrentRoundView());
   }
 
   getNextRound(): IRoundModel {
     ++this.round;
-    return new RoundModel(this.solver.getNextGuess(this.lastRound));
+    return new RoundModel(this.solver.getNextGuess(this.currentRound));
   }
 
   public IsWhitePtsIncrementable(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {

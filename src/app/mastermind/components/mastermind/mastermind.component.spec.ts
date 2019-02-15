@@ -39,21 +39,21 @@ describe('MastermindComponent', () => {
     });
 
     it('white pts # should be 0', () => {
-      expect(component.lastRound.whitePts).toBe(0);
+      expect(component.currentRound.whitePts).toBe(0);
     });
 
     it('black pts # should be 0', () => {
-      expect(component.lastRound.blackPts).toBe(0);
+      expect(component.currentRound.blackPts).toBe(0);
     });
 
     describe('after incrementBlack', () => {
       beforeEach(() => {
-        expect(component.lastRound.blackPts).toBe(0);
+        expect(component.currentRound.blackPts).toBe(0);
         component.incrementBlack();
       });
 
       it('black pts # should be 1', () => {
-        expect(component.lastRound.blackPts).toBe(1);
+        expect(component.currentRound.blackPts).toBe(1);
       });
 
       describe('cleanScore', () => {
@@ -62,29 +62,29 @@ describe('MastermindComponent', () => {
         });
 
         it('black pts # should be 0', () => {
-          expect(component.lastRound.blackPts).toBe(0);
+          expect(component.currentRound.blackPts).toBe(0);
         });
       });
     });
 
     describe('after incrementWhite', () => {
       beforeAll(() => {
-        expect(component.lastRound.whitePts).toBe(0);
+        expect(component.currentRound.whitePts).toBe(0);
       });
 
       it('white pts # should be 1', () => {
         component.incrementWhite();
-        expect(component.lastRound.whitePts).toBe(1);
+        expect(component.currentRound.whitePts).toBe(1);
       });
 
       describe('after cleanScore', () => {
         beforeAll(() => {
-          expect(component.lastRound.whitePts).toBe(1);
+          expect(component.currentRound.whitePts).toBe(1);
           component.cleanScore();
         });
 
         it('white pts # should be 0', () => {
-          expect(component.lastRound.whitePts).toBe(0);
+          expect(component.currentRound.whitePts).toBe(0);
         });
       });
     });

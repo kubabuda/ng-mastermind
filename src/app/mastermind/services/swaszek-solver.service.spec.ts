@@ -69,27 +69,53 @@ describe('SwaszekSolverService', () => {
     });
   });
 
-
   describe('checkAnswer', () => {
 
-    describe('divideTest', () => {
-      const testCases = [
-        { answer1: '1111', answer2: '2222', white: 0, black: 0 },
-        { answer1: '2222', answer2: '1111', white: 0, black: 0 },
-        { answer1: '1122', answer2: '1122', white: 4, black: 0 },
-        { answer1: '1234', answer2: '4321', white: 0, black: 4 },
-        { answer1: '1254', answer2: '1524', white: 2, black: 2 },
-        { answer1: '1253', answer2: '1524', white: 1, black: 2 },
-      ];
+    const testCases = [
+      { answer1: '1111', answer2: '2222', white: 0, black: 0 },
+      { answer1: '2222', answer2: '1111', white: 0, black: 0 },
+      { answer1: '1122', answer2: '1122', white: 4, black: 0 },
+      { answer1: '1234', answer2: '4321', white: 0, black: 4 },
+      { answer1: '1254', answer2: '1524', white: 2, black: 2 },
+      { answer1: '1253', answer2: '1524', white: 1, black: 2 },
+    ];
 
-      testCases.forEach((test, index) => {
-        it(`for ${test.answer1} and ${test.answer2} should return ${test.white} white and ${test.black} black [${index + 1}]`, () => {
-          // act
-          const check = serviceUnderTest.checkAnswer(test.answer1, test.answer2);
-          // assert
-          expect(check.whitePts).toBe(test.white);
-          expect(check.blackPts).toBe(test.black);
-        });
+    testCases.forEach((test, index) => {
+      it(`for ${test.answer1} and ${test.answer2} should return ${test.white} white and ${test.black} black [${index + 1}]`, () => {
+        // act
+        const check = serviceUnderTest.checkAnswer(test.answer1, test.answer2);
+        // assert
+        expect(check.whitePts).toBe(test.white);
+        expect(check.blackPts).toBe(test.black);
+      });
+    });
+  });
+
+  describe('isAnswerCheckResultEqual', () => {
+    const testCases = [
+      { answer1: '1111', answer2: '2222', white: 0, black: 0, is: true },
+      { answer1: '2222', answer2: '1111', white: 0, black: 0, is: true },
+      { answer1: '1122', answer2: '1122', white: 4, black: 0, is: true },
+      { answer1: '1234', answer2: '4321', white: 0, black: 4, is: true },
+      { answer1: '1254', answer2: '1524', white: 2, black: 2, is: true },
+      { answer1: '1253', answer2: '1524', white: 1, black: 2, is: true },
+      { answer1: '1111', answer2: '2222', white: 2, black: 0, is: false },
+      { answer1: '2222', answer2: '1111', white: 4, black: 0, is: false },
+      { answer1: '1122', answer2: '1122', white: 3, black: 0, is: false },
+      { answer1: '1234', answer2: '4321', white: 1, black: 3, is: false },
+      { answer1: '1254', answer2: '1524', white: 2, black: 1, is: false },
+      { answer1: '1253', answer2: '1524', white: 1, black: 1, is: false },
+    ];
+
+    testCases.forEach((test, index) => {
+      it(`for ${test.answer1}, ${test.answer2}, check ${test.white} white and ${test.black} black should be ${test.is} [${index + 1}]`,
+      () => {
+        // arrange
+        const check = { whitePts: test.white, blackPts: test.black };
+        // act
+        const result = serviceUnderTest.isAnswerCheckResultEqual(test.answer1, test.answer2, check);
+        // assert
+        expect(result).toBe(test.is);
       });
     });
   });

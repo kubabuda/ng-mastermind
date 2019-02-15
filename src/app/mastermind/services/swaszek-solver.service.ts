@@ -97,4 +97,11 @@ export class SwaszekSolverService implements ISolveMastermind  {
 
     return new MastermindAnswerCheck(white, black);
   }
+
+  isAnswerCheckResultEqual(answer1: string, answer2: string, check: IMastermindAnswerCheck): boolean {
+    const newCheck = this.checkAnswer(answer1, answer2);
+    const result = newCheck.blackPts === check.blackPts && newCheck.whitePts === check.whitePts;
+
+    return result;
+  }
 }

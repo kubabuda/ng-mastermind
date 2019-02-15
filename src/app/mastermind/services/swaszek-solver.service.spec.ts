@@ -68,4 +68,29 @@ describe('SwaszekSolverService', () => {
       expect(serviceUnderTest.round).toBe(1);
     });
   });
+
+
+  describe('checkAnswer', () => {
+
+    describe('divideTest', () => {
+      const testCases = [
+        { answer1: '1111', answer2: '2222', white: 0, black: 0 },
+        { answer1: '2222', answer2: '1111', white: 0, black: 0 },
+        { answer1: '1122', answer2: '1122', white: 4, black: 0 },
+        { answer1: '1234', answer2: '4321', white: 0, black: 4 },
+        { answer1: '1254', answer2: '1524', white: 2, black: 2 },
+        { answer1: '1253', answer2: '1524', white: 1, black: 2 },
+      ];
+
+      testCases.forEach((test, index) => {
+        it(`for ${test.answer1} and ${test.answer2} should return ${test.white} white and ${test.black} black [${index + 1}]`, () => {
+          // act
+          const check = serviceUnderTest.checkAnswer(test.answer1, test.answer2);
+          // assert
+          expect(check.whitePts).toBe(test.white);
+          expect(check.blackPts).toBe(test.black);
+        });
+      });
+    });
+  });
 });

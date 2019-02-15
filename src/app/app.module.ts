@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,12 +19,14 @@ import { MastermindModule } from './mastermind/mastermind.module';
     MastermindModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [
     MatButtonModule,
     MatCheckboxModule,
+    MatIconModule,
   ],
 })
 export class AppModule { }

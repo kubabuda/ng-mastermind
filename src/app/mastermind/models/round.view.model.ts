@@ -1,4 +1,4 @@
-import { RoundModel } from './round.model';
+import { IRoundModel } from './round.model';
 
 export interface IRoundModelView {
   answerColors: string[];
@@ -13,7 +13,7 @@ export class RoundModelView implements IRoundModelView {
 
     private availableAswerColors = [ 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'white', 'black' ];
 
-    constructor(model: RoundModel) {
+    constructor(model: IRoundModel) {
       const codeLength = model.answer.length;
       if (codeLength < (model.whitePts + model.blackPts)
        || codeLength === model.whitePts - 1 && model.blackPts === 1) {

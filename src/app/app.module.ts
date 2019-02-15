@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatButtonModule, MatCheckboxModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatIconModule, MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,7 @@ import { MastermindModule } from './mastermind/mastermind.module';
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -27,6 +28,7 @@ import { MastermindModule } from './mastermind/mastermind.module';
     MatButtonModule,
     MatCheckboxModule,
     MatIconModule,
+    MatSnackBarModule,
   ],
 })
 export class AppModule { }

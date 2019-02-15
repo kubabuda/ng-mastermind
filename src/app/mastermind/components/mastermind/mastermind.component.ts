@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatSnackBar} from '@angular/material';
 import { RoundModel, IRoundModel, IMastermindAnswerCheck } from '../../models/round.model';
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
@@ -19,7 +20,7 @@ export class MastermindComponent implements OnInit {
   private settings: IGameSettings;
   private solver: ISolveMastermind;
 
-  constructor() {
+  constructor(private snackBar: MatSnackBar) {
     this.settings = new GameSettings(5, 8);
   }
 
@@ -56,12 +57,16 @@ export class MastermindComponent implements OnInit {
   }
 
   checkScore(): void {
-    this.roundModelViews.push(this.getCurrentRoundView());
-    this.currentRound = this.getNextRound();
-    this.updateLastRoundView();
-    // todo check if win, if yes:
-    // let snackBarRef = snackBar.open('Bravo', 'OK');
-    // newGame()
+    if (this.currentRound.whitePts === this.settings.digits) {
+      this.snackBar.open(` WIN IN ${this.round} ROUNDS, NICE`, 'OK', {
+        duration: 5000,
+      });
+      this.newGame();
+    } else {
+      this.roundModelViews.push(this.getCurrentRoundView());
+      this.currentRound = this.getNextRound();
+      this.updateLastRoundView();
+    }
   }
 
   private getCurrentRoundView(): IRoundModelView {

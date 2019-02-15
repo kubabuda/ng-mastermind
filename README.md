@@ -33,3 +33,14 @@ Run `npm run deploy`
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+# DEV TODOs
+
+For Swaszek algo with initial 34567 on Mastermind(5, 8):
+Mean rounds per solution is 5,95498657226562
+Example with most rounds - 9 - is 52451
+
+ - integration test over full range of keys
+ - speed dial fab to reload round / game
+ - randomized algo

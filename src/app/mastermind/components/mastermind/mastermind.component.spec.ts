@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MastermindComponent } from './mastermind.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 describe('MastermindComponent', () => {
   let component: MastermindComponent;
@@ -11,6 +12,9 @@ describe('MastermindComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MastermindComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      providers : [
+        { provide: MatSnackBar,  useValue: { open() {}  }, }
+      ]
     })
     .compileComponents();
   }));

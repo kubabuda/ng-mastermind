@@ -1,23 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <!-- <h1>
-    Welcome to {{ title }}!
-  </h1> -->
-  <!-- <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="> -->
-</div>
 <br/>
   <svg viewBox="0 0 100 14">
-    <circle cx="8%"    cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="red" />
-    <circle cx="19.5%" cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="orange" />
-    <circle cx="31%"   cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="yellow" />
-    <circle cx="42.5%" cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="green" />
-    <circle cx="54%"   cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="blue" />
-  
-    <circle cx="67%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="white" visibility="visible"  />
-    <circle cx="74%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="white" visibility="visible" />
-    <circle cx="81%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="white" visibility="visible" />
-    <circle cx="88%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="black" visibility="visible" />
-    <circle cx="95%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="black" visibility="visible" />
+    <circle cx="8%"    cy="50%" r="5.6" stroke="black" stroke-width="0.5" [attr.fill]="answerColors[0]" />
+    <circle cx="19.5%" cy="50%" r="5.6" stroke="black" stroke-width="0.5" [attr.fill]="answerColors[1]" />
+    <circle cx="31%"   cy="50%" r="5.6" stroke="black" stroke-width="0.5" [attr.fill]="answerColors[2]" />
+    <circle cx="42.5%" cy="50%" r="5.6" stroke="black" stroke-width="0.5" [attr.fill]="answerColors[3]" />
+    <circle cx="54%"   cy="50%" r="5.6" stroke="black" stroke-width="0.5" [attr.fill]="answerColors[4]" />
+
+    <circle cx="67%" cy="60%" r="3" stroke="black" stroke-width="0.5" [attr.fill]="checkColors[0]" [attr.visibility]="checkVisibility[0]"  />
+    <circle cx="74%" cy="60%" r="3" stroke="black" stroke-width="0.5" [attr.fill]="checkColors[1]" [attr.visibility]="checkVisibility[1]" />
+    <circle cx="81%" cy="60%" r="3" stroke="black" stroke-width="0.5" [attr.fill]="checkColors[2]" [attr.visibility]="checkVisibility[2]" />
+    <circle cx="88%" cy="60%" r="3" stroke="black" stroke-width="0.5" [attr.fill]="checkColors[3]" [attr.visibility]="checkVisibility[3]" />
+    <circle cx="95%" cy="60%" r="3" stroke="black" stroke-width="0.5" [attr.fill]="checkColors[4]" [attr.visibility]="checkVisibility[4]" />
   </svg>
 
   <svg viewBox="0 0 100 14">
@@ -26,7 +20,7 @@
     <circle cx="31%"   cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="yellow" />
     <circle cx="42.5%" cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="green" />
     <circle cx="54%"   cy="50%" r="5.6" stroke="black" stroke-width="0.5" fill="blue" />
-  
+
     <circle cx="67%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="white" visibility="visible"  />
     <circle cx="74%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="white" visibility="visible" />
     <circle cx="81%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="white" visibility="visible" />
@@ -34,7 +28,7 @@
     <circle cx="95%" cy="60%" r="3" stroke="black" stroke-width="0.5" fill="black" visibility="visible" />
   </svg>
 
-  
+
     <svg width="60%" viewBox="0 0 105 22">
       <circle cx="10%" cy="50%" r="10" stroke="black" stroke-width="1" fill="red" />
       <circle cx="30%" cy="50%" r="10" stroke="black" stroke-width="1" fill="orange" />

@@ -11,7 +11,7 @@ export class RoundModelView implements IRoundModelView {
     public checkColors: string[];
     public checkVisibility: string[];
 
-    private availableAswerColors = [ 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'white', 'black' ];
+    private availableAswerColors = [ 'saddlebrown', 'crimson', 'darkorange', 'gold', 'darkgreen', 'darkblue', 'white', 'black' ];
 
     constructor(model: IRoundModel) {
       const codeLength = model.answer.length;

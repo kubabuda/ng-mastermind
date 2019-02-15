@@ -60,7 +60,7 @@ describe('SwaszekSolverService', () => {
 
     it('should return 2345 for MM(4,6)', () => {
       // arrange
-      const prevCheck = { whitePts: 0, blackPts: 0 };
+      const prevCheck = { whitePts: 0, blackPts: 0, answer: 'none' };
       // act
       const initialGuess = serviceUnderTest.getNextGuess(prevCheck);
       // assert
@@ -111,11 +111,30 @@ describe('SwaszekSolverService', () => {
       it(`for ${test.answer1}, ${test.answer2}, check ${test.white} white and ${test.black} black should be ${test.is} [${index + 1}]`,
       () => {
         // arrange
-        const check = { whitePts: test.white, blackPts: test.black };
+        const check = { whitePts: test.white, blackPts: test.black, };
         // act
         const result = serviceUnderTest.isAnswerCheckResultEqual(test.answer1, test.answer2, check);
         // assert
         expect(result).toBe(test.is);
+      });
+    });
+  });
+
+  describe('prunedKeys', () => {
+    const testCases = [
+      { keys: [ '1111', '2222'], answer: '1111', white: 0, black: 0, after: [ '2222' ] },
+      { keys: [ '1111', '2222', '2233', '3333'], answer: '1111', white: 0, black: 0, after: [ '2222', '2233', '3333' ] },
+    ];
+
+    testCases.forEach((test, index) => {
+      it(`[${index + 1}] for ${test.keys}, a${test.answer}, check ${test.white} white and ${test.black} black should return ${test.after} `,
+      () => {
+        // arrange
+        const check = { whitePts: test.white, blackPts: test.black, answer: test.answer, };
+        // act
+        const result = serviceUnderTest.prunedKeys(test.keys, check);
+        // assert
+        expect(result).toEqual(test.after);
       });
     });
   });

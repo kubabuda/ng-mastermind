@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { GameSettings } from '../models/game.settings.model';
-import { IMastermindAnswerCheck, MastermindAnswerCheck } from '../models/round.model';
+import { IMastermindAnswerCheck, MastermindAnswerCheck, IRoundModel } from '../models/round.model';
 import { error } from 'util';
 
 export interface ISolveMastermind {
-  getNextGuess(prevRoundCheck: IMastermindAnswerCheck): string;
+  getNextGuess(prevRoundCheck: IRoundModel): string;
 }
 
 
@@ -20,24 +20,14 @@ export class SwaszekSolverService implements ISolveMastermind  {
     this.keys = this.getKeysRange(this.settings.digits, settings.colors);
   }
 
-  getNextGuess(prevRoundCheck: IMastermindAnswerCheck): string {
+  getNextGuess(prevRoundCheck: IRoundModel): string {
     ++this.round;
     if (this.round === 1) {
       return this.getInitialGuess();
     } else {
-      // todo implement solving logic
-
+      this.keys = this.prunedKeys(this.keys, prevRoundCheck);
+      return this.keys[0];
     }
-
-    const answers = [ '11122', '12345', '23456', '34567', '12322' ];
-    let result = '';
-    if (this.round > 0) {
-      result = answers[this.round % 5];
-    } else {
-      result = answers[this.round];
-    }
-
-    return result;
   }
 
   getInitialGuess(): string {
@@ -101,6 +91,18 @@ export class SwaszekSolverService implements ISolveMastermind  {
   isAnswerCheckResultEqual(answer1: string, answer2: string, check: IMastermindAnswerCheck): boolean {
     const newCheck = this.checkAnswer(answer1, answer2);
     const result = newCheck.blackPts === check.blackPts && newCheck.whitePts === check.whitePts;
+
+    return result;
+  }
+
+  prunedKeys(keys: string[], check: IRoundModel): string[] {
+    const result = [];
+
+    keys.forEach(key => {
+      if (this.isAnswerCheckResultEqual(key, check.answer, check)) {
+        result.push(key);
+      }
+    });
 
     return result;
   }

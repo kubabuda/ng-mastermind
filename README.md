@@ -1,4 +1,4 @@
-# [NgMastermind](https://kubabuda.github.io/ng-mastermind/)
+# [NgMastermind](https://kubabuda.github.io/ng-mastermind/) [![Build Status](https://travis-ci.org/kubabuda/ng-mastermind.svg?branch=master)](https://travis-ci.org/kubabuda/ng-mastermind)
 
 Classic Mastermind game solver in TS.
 

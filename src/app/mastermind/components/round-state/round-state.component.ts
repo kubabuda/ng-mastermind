@@ -10,7 +10,6 @@ export class RoundStateComponent implements OnInit {
 
   @Input()
   modelView: RoundModelView;
-  moo = 'MOO';
 
   constructor() { }
 

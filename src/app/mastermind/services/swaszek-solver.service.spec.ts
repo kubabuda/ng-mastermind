@@ -44,4 +44,28 @@ describe('SwaszekSolverService', () => {
       expect(result[1295]).toEqual('5555');
     });
   });
+
+  describe('getInitialGuess', () => {
+    it('should return 2345 for MM(4,6)', () => {
+      const initialGuess = serviceUnderTest.getInitialGuess();
+
+      expect(initialGuess).toBe('2345');
+    });
+  });
+
+  describe('getNextGuess', () => {
+    beforeAll(() => {
+      expect(serviceUnderTest.round).toBe(0);
+    });
+
+    it('should return 2345 for MM(4,6)', () => {
+      // arrange
+      const prevCheck = { answer: 'none', whitePts: 0, blackPts: 0 };
+      // act
+      const initialGuess = serviceUnderTest.getNextGuess(prevCheck);
+      // assert
+      expect(initialGuess).toBe('2345');
+      expect(serviceUnderTest.round).toBe(1);
+    });
+  });
 });

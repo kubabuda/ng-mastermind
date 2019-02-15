@@ -15,11 +15,11 @@ export class MastermindComponent implements OnInit {
   lastRound: IRoundModel;
 
   round = 0;
-  private settings: GameSettings;
+  private settings: IGameSettings;
   private solver: ISolveMastermind;
 
   constructor() {
-    this.settings = new GameSettings(4, 6);
+    this.settings = new GameSettings(5, 8);
   }
 
   ngOnInit() {
@@ -35,15 +35,17 @@ export class MastermindComponent implements OnInit {
   }
 
   incrementWhite(): void {
-    // todo validate
-    this.lastRound.whitePts += 1;
-    this.updateLastRoundView();
+    if (this.IsWhitePtsIncrementable(this.lastRound, this.settings)) {
+      this.lastRound.whitePts += 1;
+      this.updateLastRoundView();
+    }
   }
 
   incrementBlack(): void {
-    // todo validate
-    this.lastRound.blackPts += 1;
-    this.updateLastRoundView();
+    if (this.IsBlackPtsIncrementable(this.lastRound, this.settings)) {
+      this.lastRound.blackPts += 1;
+      this.updateLastRoundView();
+    }
   }
 
   cleanScore(): void {
@@ -56,6 +58,9 @@ export class MastermindComponent implements OnInit {
     this.roundModelViews.push(this.getUpdatedLastRoundView());
     this.lastRound = this.getNextRound();
     this.updateLastRoundView();
+    // todo check if win, if yes:
+    // let snackBarRef = snackBar.open('Bravo', 'OK');
+    // newGame()
   }
 
   private getUpdatedLastRoundView(): IRoundModelView {
@@ -72,5 +77,18 @@ export class MastermindComponent implements OnInit {
     return new RoundModel(this.solver.getNextGuess(this.lastRound));
   }
 
+  public IsWhitePtsIncrementable(check: IMastermindCheck, settings: IGameSettings): boolean {
+    if (check.whitePts + check.blackPts === settings.digits) {
+        return false;
+    }
+    return true;
+  }
 
+  public IsBlackPtsIncrementable(check: IMastermindCheck, settings: IGameSettings): boolean {
+    if (check.whitePts + check.blackPts === settings.digits
+      || check.whitePts + 1 === settings.digits) {
+        return false;
+    }
+    return true;
+  }
 }

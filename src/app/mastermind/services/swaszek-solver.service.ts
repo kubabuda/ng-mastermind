@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IMastermindCheck } from '../models/round.model';
+import { GameSettings } from '../models/game.settings.model';
 
 export interface ISolveMastermind {
   getNextGuess(prevRoundCheck: IMastermindCheck): string;
@@ -12,7 +13,7 @@ export interface ISolveMastermind {
 export class SwaszekSolverService implements ISolveMastermind  {
   round: number;
 
-  constructor() {
+  constructor(settings: GameSettings) {
     this.round = 0;
   }
 
@@ -25,9 +26,26 @@ export class SwaszekSolverService implements ISolveMastermind  {
     } else {
       result = answers[this.round];
     }
-    console.log(`${this.round} next guess is ${result}`);
+    // console.log(`${this.round} next guess is ${result}`);
     ++this.round;
 
+    return result;
+  }
+
+  getKeysRange(digits: number, colors: number): string[] {
+    const result = [];
+
+    const rangeSize = Math.pow(colors, digits);
+
+    for (let i = 0; i < rangeSize; i++) {
+      let currKeyWord = ``;
+      let c = i;
+      for (let d = 0; d < digits; d++) {
+        currKeyWord = `${c % colors}${currKeyWord}`;
+        c = Math.floor(c / colors);
+      }
+      result.push(currKeyWord);
+    }
     return result;
   }
 }

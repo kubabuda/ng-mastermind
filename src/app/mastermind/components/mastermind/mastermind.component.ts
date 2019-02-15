@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RoundModel, IRoundModel, IMastermindCheck } from '../../models/round.model';
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
+import { IGameSettings, GameSettings } from '../../models/game.settings.model';
 
 @Component({
   selector: 'app-mastermind',
@@ -13,15 +14,24 @@ export class MastermindComponent implements OnInit {
   roundModelViews: IRoundModelView[];
   lastRound: IRoundModel;
 
-  private round = 0;
+  round = 0;
+  private settings: GameSettings;
   private solver: ISolveMastermind;
 
   constructor() {
+    this.settings = new GameSettings(4, 6);
   }
 
   ngOnInit() {
-    this.restartGame();
+    this.newGame();
+  }
 
+  newGame() {
+    this.round = 0;
+    this.solver = new SwaszekSolverService(this.settings);
+    this.roundModelViews = [];
+    this.lastRound = this.getNextRound();
+    this.cleanScore();
   }
 
   incrementWhite(): void {
@@ -49,9 +59,6 @@ export class MastermindComponent implements OnInit {
   }
 
   private getUpdatedLastRoundView(): IRoundModelView {
-    console.log(`${this.round} getUpdatedLastRoundView\
-     answer ${this.lastRound.answer} wh${this.lastRound.whitePts} black ${this.lastRound.blackPts}`);
-
     return new RoundModelView(this.lastRound);
   }
 
@@ -60,17 +67,10 @@ export class MastermindComponent implements OnInit {
     this.roundModelViews.push(this.getUpdatedLastRoundView());
   }
 
-  restartGame() {
-    this.round = 0;
-    this.solver = new SwaszekSolverService();
-    this.roundModelViews = [];
-    this.lastRound = this.getNextRound();
-    this.cleanScore();
-  }
-
   getNextRound(): IRoundModel {
-    console.log('Get next round');
+    ++this.round;
     return new RoundModel(this.solver.getNextGuess(this.lastRound));
   }
+
 
 }

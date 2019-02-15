@@ -17,7 +17,7 @@ export class SwaszekSolverService implements ISolveMastermind  {
   }
 
   getNextGuess(prevRoundCheck: IMastermindCheck): string {
-    // todo move to solver service
+    // todo implement solving logic
     const answers = [ '11122', '12345', '23456', '34567', '12322' ];
     let result = '';
     if (this.round > 0) {

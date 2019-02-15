@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoundModel, IRoundModel, IMastermindCheck } from '../../models/round.model';
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
-import { last } from '@angular/router/src/utils/collection';
 import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
 
 @Component({
@@ -26,11 +25,13 @@ export class MastermindComponent implements OnInit {
   }
 
   incrementWhite(): void {
+    // todo validate
     this.lastRound.whitePts += 1;
     this.updateLastRoundView();
   }
 
   incrementBlack(): void {
+    // todo validate
     this.lastRound.blackPts += 1;
     this.updateLastRoundView();
   }

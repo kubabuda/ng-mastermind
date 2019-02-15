@@ -15,3 +15,11 @@ script:
   - ng lint
   - npm run test-headless
   - ng build --prod --base-href https://kubabuda.github.io/ng-mastermind/
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/travis-demo
+  on:
+    branch: master

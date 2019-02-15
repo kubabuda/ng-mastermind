@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RoundModel, IRoundModel, IMastermindCheck } from '../../models/round.model';
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { last } from '@angular/router/src/utils/collection';
+import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
 
 @Component({
   selector: 'app-mastermind',
@@ -14,6 +15,7 @@ export class MastermindComponent implements OnInit {
   lastRound: IRoundModel;
 
   private round = 0;
+  private solver: ISolveMastermind;
 
   constructor() {
   }
@@ -42,6 +44,7 @@ export class MastermindComponent implements OnInit {
   checkScore(): void {
     this.roundModelViews.push(this.getUpdatedLastRoundView());
     this.lastRound = this.getNextRound();
+    this.updateLastRoundView();
   }
 
   private getUpdatedLastRoundView(): IRoundModelView {
@@ -58,6 +61,7 @@ export class MastermindComponent implements OnInit {
 
   restartGame() {
     this.round = 0;
+    this.solver = new SwaszekSolverService();
     this.roundModelViews = [];
     this.lastRound = this.getNextRound();
     this.cleanScore();
@@ -65,21 +69,7 @@ export class MastermindComponent implements OnInit {
 
   getNextRound(): IRoundModel {
     console.log('Get next round');
-    return new RoundModel(this.getNextGuess(this.lastRound));
+    return new RoundModel(this.solver.getNextGuess(this.lastRound));
   }
 
-  getNextGuess(prevRoundCheck: IMastermindCheck): string {
-    // todo move to solver service
-    const answers = [ '11122', '12345', '23456', '34567', '12322' ]; 
-    let result = '';
-    if (this.round > 0) {
-      result = answers[this.round % this.lastRound.answer.length];
-    } else {
-      result = answers[this.round];
-    }
-    console.log(`${this.round} next guess is ${result}`);
-    ++this.round;
-
-    return result;
-  }
 }

@@ -9,16 +9,7 @@
   <button mat-raised-button (click)="checkScore()" color="primary"><mat-icon>check_circle</mat-icon></button>
 </div>
 
-<!-- todo speed dial fob -->
-<!-- <div class="button-row"> 
-  <button mat-raised-button (click)="cleanScore()" color="accent"><mat-icon>skip_previous</mat-icon></button>
-  <button mat-raised-button (click)="newGame()" color="warn"><mat-icon>autorenew</mat-icon></button>
-</div> -->
-
-
-<ngc-float-button icon="add" (events)="output($event)" [open]="open" 
-  direction="top" color="red">
-    <ngc-float-item-button (click)="newGame()" icon="autorenew" content="new game"></ngc-float-item-button>
-    <ngc-float-item-button (click)="cleanScore()" icon="skip_previous" content="retype score"></ngc-float-item-button>
-    <!-- <ngc-float-item-button icon="mode_edit" content="float item 3"></ngc-float-item-button> -->
+<ngc-float-button icon="add" direction="top" color="red">
+  <ngc-float-item-button (click)="cleanScore()" icon="skip_previous" content="retype score"></ngc-float-item-button>
+  <ngc-float-item-button (click)="newGame()" icon="autorenew" content="new game"></ngc-float-item-button>
 </ngc-float-button>

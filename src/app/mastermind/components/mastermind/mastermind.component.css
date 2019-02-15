@@ -1,6 +1,7 @@
 .button-row {
-  margin: auto;
-  width: 50%;
+  /* margin: auto;
+  width: 50%; */
+  align-self: center;
 }
 
 .button-row button,

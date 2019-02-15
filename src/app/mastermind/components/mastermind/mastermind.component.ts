@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoundModel } from '../../models/round.model';
-import { RoundModelView } from '../../models/round.view.model';
+import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 
 @Component({
   selector: 'app-mastermind',
@@ -9,7 +9,7 @@ import { RoundModelView } from '../../models/round.view.model';
 })
 export class MastermindComponent implements OnInit {
 
-  roundModelViews: RoundModelView[];
+  roundModelViews: IRoundModelView[];
 
   constructor() {
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RoundModelView } from '../../models/round.view.model';
+import { IRoundModelView } from '../../models/round.view.model';
 
 @Component({
   selector: 'app-round-state',
@@ -9,7 +9,7 @@ import { RoundModelView } from '../../models/round.view.model';
 export class RoundStateComponent implements OnInit {
 
   @Input()
-  modelView: RoundModelView;
+  modelView: IRoundModelView;
 
   constructor() { }
 

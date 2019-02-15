@@ -1,6 +1,12 @@
 import { RoundModel } from './round.model';
 
-export class RoundModelView {
+export interface IRoundModelView {
+  answerColors: string[];
+  checkColors: string[];
+  checkVisibility: string[];
+}
+
+export class RoundModelView implements IRoundModelView {
     public answerColors: string[];
     public checkColors: string[];
     public checkVisibility: string[];

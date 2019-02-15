@@ -9,8 +9,6 @@ import { RoundModelView } from '../models/round.view.model';
 })
 export class MastermindComponent implements OnInit {
 
-  mastermind = 'ok';
-
   roundModelView: RoundModelView;
 
   constructor() {

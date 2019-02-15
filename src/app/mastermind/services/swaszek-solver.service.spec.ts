@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SwaszekSolverService } from './swaszek-solver.service';
-import { IGameSettings, GameSettings } from '../models/game.settings.model';
+import { GameSettings } from '../models/game.settings.model';
 
 describe('SwaszekSolverService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -60,7 +60,7 @@ describe('SwaszekSolverService', () => {
 
     it('should return 2345 for MM(4,6)', () => {
       // arrange
-      const prevCheck = { answer: 'none', whitePts: 0, blackPts: 0 };
+      const prevCheck = { whitePts: 0, blackPts: 0 };
       // act
       const initialGuess = serviceUnderTest.getNextGuess(prevCheck);
       // assert

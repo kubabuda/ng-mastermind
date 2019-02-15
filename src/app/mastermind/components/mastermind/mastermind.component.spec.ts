@@ -122,7 +122,7 @@ describe('MastermindComponent', () => {
     };
     it('should be false when all white', () => {
       const check = {
-        whitePts: 4, blackPts: 0, answer: 'not important',
+        whitePts: 4, blackPts: 0,
       };
       // act
       const result = component.IsWhitePtsIncrementable(check, settings);
@@ -132,7 +132,7 @@ describe('MastermindComponent', () => {
 
     it('should be false when all black', () => {
       const check = {
-        whitePts: 0, blackPts: 4, answer: 'not important',
+        whitePts: 0, blackPts: 4,
       };
       // act
       const result = component.IsWhitePtsIncrementable(check, settings);
@@ -142,7 +142,7 @@ describe('MastermindComponent', () => {
 
     it('should be false when all check digits filled', () => {
       const check = {
-        whitePts: 3, blackPts: 1, answer: 'not important',
+        whitePts: 3, blackPts: 1,
       };
       // act
       const result = component.IsWhitePtsIncrementable(check, settings);
@@ -152,7 +152,7 @@ describe('MastermindComponent', () => {
 
     it('should be true when not all check digits filled', () => {
       const check = {
-        whitePts: 2, blackPts: 1, answer: 'not important',
+        whitePts: 2, blackPts: 1,
       };
       // act
       const result = component.IsWhitePtsIncrementable(check, settings);
@@ -162,7 +162,7 @@ describe('MastermindComponent', () => {
 
     it('should be true when no check digits filled', () => {
       const check = {
-        whitePts: 0, blackPts: 0, answer: 'not important',
+        whitePts: 0, blackPts: 0,
       };
       // act
       const result = component.IsWhitePtsIncrementable(check, settings);
@@ -177,7 +177,7 @@ describe('MastermindComponent', () => {
     };
     it('should be false when all white', () => {
       const check = {
-        whitePts: 4, blackPts: 0, answer: 'not important',
+        whitePts: 4, blackPts: 0,
       };
       // act
       const result = component.IsBlackPtsIncrementable(check, settings);
@@ -187,7 +187,7 @@ describe('MastermindComponent', () => {
 
     it('should be false when all - 1 white', () => {
       const check = {
-        whitePts: 3, blackPts: 0, answer: 'not important',
+        whitePts: 3, blackPts: 0,
       };
       // act
       const result = component.IsBlackPtsIncrementable(check, settings);
@@ -197,7 +197,7 @@ describe('MastermindComponent', () => {
 
     it('should be false when all black', () => {
       const check = {
-        whitePts: 0, blackPts: 4, answer: 'not important',
+        whitePts: 0, blackPts: 4,
       };
       // act
       const result = component.IsBlackPtsIncrementable(check, settings);
@@ -207,7 +207,7 @@ describe('MastermindComponent', () => {
 
     it('should be false when all check digits filled', () => {
       const check = {
-        whitePts: 3, blackPts: 1, answer: 'not important',
+        whitePts: 3, blackPts: 1,
       };
       // act
       const result = component.IsBlackPtsIncrementable(check, settings);
@@ -217,7 +217,7 @@ describe('MastermindComponent', () => {
 
     it('should be true when not all check digits filled', () => {
       const check = {
-        whitePts: 2, blackPts: 1, answer: 'not important',
+        whitePts: 2, blackPts: 1,
       };
       // act
       const result = component.IsBlackPtsIncrementable(check, settings);
@@ -227,7 +227,7 @@ describe('MastermindComponent', () => {
 
     it('should be true when no check digits filled', () => {
       const check = {
-        whitePts: 0, blackPts: 0, answer: 'not important',
+        whitePts: 0, blackPts: 0,
       };
       // act
       const result = component.IsBlackPtsIncrementable(check, settings);

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IMastermindCheck } from '../models/round.model';
-import { IGameSettings, GameSettings } from '../models/game.settings.model';
+import { GameSettings } from '../models/game.settings.model';
+import { IMastermindAnswerCheck, MastermindAnswerCheck } from '../models/round.model';
 
 export interface ISolveMastermind {
-  getNextGuess(prevRoundCheck: IMastermindCheck): string;
+  getNextGuess(prevRoundCheck: IMastermindAnswerCheck): string;
 }
 
 
@@ -19,7 +19,7 @@ export class SwaszekSolverService implements ISolveMastermind  {
     this.keys = this.getKeysRange(this.settings.digits, settings.colors);
   }
 
-  getNextGuess(prevRoundCheck: IMastermindCheck): string {
+  getNextGuess(prevRoundCheck: IMastermindAnswerCheck): string {
     ++this.round;
     if (this.round === 1) {
       return this.getInitialGuess();
@@ -65,5 +65,9 @@ export class SwaszekSolverService implements ISolveMastermind  {
     }
 
     return result;
+  }
+
+  checkAnswer(answer1: string, answer2: string): IMastermindAnswerCheck {
+    return new MastermindAnswerCheck(0, 0);
   }
 }

@@ -1,10 +1,19 @@
-export interface IMastermindCheck {
-  answer: string;
+export interface IMastermindAnswerCheck {
   whitePts: number;
   blackPts: number;
 }
 
-export interface IRoundModel extends IMastermindCheck {
+export class MastermindAnswerCheck implements IMastermindAnswerCheck {
+  whitePts: number;
+  blackPts: number;
+
+  constructor(white: number, black: number) {
+      this.whitePts = white;
+      this.blackPts = black;
+  }
+}
+
+export interface IRoundModel extends IMastermindAnswerCheck {
   answer: string;
 }
 

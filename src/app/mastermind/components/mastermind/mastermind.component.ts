@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RoundModel, IRoundModel, IMastermindCheck } from '../../models/round.model';
+import { RoundModel, IRoundModel, IMastermindAnswerCheck } from '../../models/round.model';
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
 import { IGameSettings, GameSettings } from '../../models/game.settings.model';
+
 
 @Component({
   selector: 'app-mastermind',
@@ -77,14 +78,14 @@ export class MastermindComponent implements OnInit {
     return new RoundModel(this.solver.getNextGuess(this.lastRound));
   }
 
-  public IsWhitePtsIncrementable(check: IMastermindCheck, settings: IGameSettings): boolean {
+  public IsWhitePtsIncrementable(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
     if (check.whitePts + check.blackPts === settings.digits) {
         return false;
     }
     return true;
   }
 
-  public IsBlackPtsIncrementable(check: IMastermindCheck, settings: IGameSettings): boolean {
+  public IsBlackPtsIncrementable(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
     if (check.whitePts + check.blackPts === settings.digits
       || check.whitePts + 1 === settings.digits) {
         return false;

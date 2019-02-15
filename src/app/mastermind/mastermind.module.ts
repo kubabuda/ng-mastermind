@@ -5,11 +5,11 @@ import { RoundStateComponent } from './components/round-state/round-state.compon
 import { MatButtonModule, MatIconModule } from '@angular/material';
 
 @NgModule({
-  declarations: [MastermindComponent, RoundStateComponent],
+  declarations: [MastermindComponent, RoundStateComponent ],
   imports: [
     CommonModule,
     MatButtonModule,
     MatIconModule,
-  ]
+  ],
 })
 export class MastermindModule { }

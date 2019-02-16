@@ -83,18 +83,15 @@ export class MastermindComponent implements OnInit {
     return new RoundModel(this.solver.getNextGuess(this.currentRound));
   }
 
+  public IsAnswerCheckFull(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
+    return check.whitePts + check.blackPts >= settings.digits;
+  }
+
   public IsWhitePtsIncrementable(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
-    if (check.whitePts + check.blackPts === settings.digits) {
-        return false;
-    }
-    return true;
+    return !this.IsAnswerCheckFull(check, settings);
   }
 
   public IsBlackPtsIncrementable(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
-    if (check.whitePts + check.blackPts === settings.digits
-      || check.whitePts + 1 === settings.digits) {
-        return false;
-    }
-    return true;
+    return !this.IsAnswerCheckFull(check, settings) && check.whitePts + 1 < settings.digits;
   }
 }

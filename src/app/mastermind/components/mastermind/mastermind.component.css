@@ -1,7 +1,11 @@
 .button-row {
   /* margin: auto;
   width: 50%; */
-  align-self: center;
+  /* align-self: center; */
+  bottom: 20px;
+  left: 20px;
+  position: absolute;
+
 }
 
 .button-row button,
@@ -18,11 +22,11 @@ ngc-float-button  {
 /* BIGGER ? */
 
 ngc-float-button /deep/ .content {
-margin-right: 55px;
+  margin-right: 55px;
 }
 
 ngc-float-button /deep/ .fab-toggle,
 ngc-float-button /deep/ .fab-item,
 ngc-float-button /deep/ .content {
-transform: scale(1.1);
+  transform: scale(1.1);
 }

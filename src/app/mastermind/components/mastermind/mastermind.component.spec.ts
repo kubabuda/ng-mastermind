@@ -124,54 +124,28 @@ describe('MastermindComponent', () => {
     const settings = {
       digits: 4, colors: 0,
     };
-    it('should be false when all white', () => {
-      const check = {
-        whitePts: 4, blackPts: 0,
-      };
-      // act
-      const result = component.IsWhitePtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(false);
-    });
+    const testCases = [
+      { check: { whitePts: 0, blackPts: 0, }, is: true },
+      { check: { whitePts: 4, blackPts: 0, }, is: false },
+      { check: { whitePts: 0, blackPts: 4, }, is: false },
+      { check: { whitePts: 2, blackPts: 2, }, is: false },
+      { check: { whitePts: 1, blackPts: 3, }, is: false },
+      { check: { whitePts: 3, blackPts: 1, }, is: false },
+      { check: { whitePts: 2, blackPts: 1, }, is: true },
+      { check: { whitePts: 3, blackPts: 0, }, is: true },
+      { check: { whitePts: 1, blackPts: 1, }, is: true },
+      { check: { whitePts: 5, blackPts: 1, }, is: false },
+      { check: { whitePts: 0, blackPts: 5, }, is: false },
+    ];
 
-    it('should be false when all black', () => {
-      const check = {
-        whitePts: 0, blackPts: 4,
-      };
-      // act
-      const result = component.IsWhitePtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(false);
-    });
-
-    it('should be false when all check digits filled', () => {
-      const check = {
-        whitePts: 3, blackPts: 1,
-      };
-      // act
-      const result = component.IsWhitePtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(false);
-    });
-
-    it('should be true when not all check digits filled', () => {
-      const check = {
-        whitePts: 2, blackPts: 1,
-      };
-      // act
-      const result = component.IsWhitePtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(true);
-    });
-
-    it('should be true when no check digits filled', () => {
-      const check = {
-        whitePts: 0, blackPts: 0,
-      };
-      // act
-      const result = component.IsWhitePtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(true);
+    testCases.forEach((test, index) => {
+      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
+      () => {
+        // act
+        const result = component.IsWhitePtsIncrementable(test.check, settings);
+        // assert
+        expect(result).toBe(test.is);
+      });
     });
   });
 
@@ -179,64 +153,28 @@ describe('MastermindComponent', () => {
     const settings = {
       digits: 4, colors: 0,
     };
-    it('should be false when all white', () => {
-      const check = {
-        whitePts: 4, blackPts: 0,
-      };
-      // act
-      const result = component.IsBlackPtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(false);
-    });
+    const testCases = [
+      { check: { whitePts: 0, blackPts: 0, }, is: true },
+      { check: { whitePts: 4, blackPts: 0, }, is: false },
+      { check: { whitePts: 0, blackPts: 4, }, is: false },
+      { check: { whitePts: 2, blackPts: 2, }, is: false },
+      { check: { whitePts: 1, blackPts: 3, }, is: false },
+      { check: { whitePts: 3, blackPts: 1, }, is: false },
+      { check: { whitePts: 2, blackPts: 1, }, is: true },
+      { check: { whitePts: 3, blackPts: 0, }, is: false },
+      { check: { whitePts: 1, blackPts: 1, }, is: true },
+      { check: { whitePts: 5, blackPts: 1, }, is: false },
+      { check: { whitePts: 0, blackPts: 5, }, is: false },
+    ];
 
-    it('should be false when all - 1 white', () => {
-      const check = {
-        whitePts: 3, blackPts: 0,
-      };
-      // act
-      const result = component.IsBlackPtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(false);
-    });
-
-    it('should be false when all black', () => {
-      const check = {
-        whitePts: 0, blackPts: 4,
-      };
-      // act
-      const result = component.IsBlackPtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(false);
-    });
-
-    it('should be false when all check digits filled', () => {
-      const check = {
-        whitePts: 3, blackPts: 1,
-      };
-      // act
-      const result = component.IsBlackPtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(false);
-    });
-
-    it('should be true when not all check digits filled', () => {
-      const check = {
-        whitePts: 2, blackPts: 1,
-      };
-      // act
-      const result = component.IsBlackPtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(true);
-    });
-
-    it('should be true when no check digits filled', () => {
-      const check = {
-        whitePts: 0, blackPts: 0,
-      };
-      // act
-      const result = component.IsBlackPtsIncrementable(check, settings);
-      // assert
-      expect(result).toBe(true);
+    testCases.forEach((test, index) => {
+      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
+      () => {
+        // act
+        const result = component.IsBlackPtsIncrementable(test.check, settings);
+        // assert
+        expect(result).toBe(test.is);
+      });
     });
   });
 });

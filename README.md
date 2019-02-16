@@ -42,5 +42,4 @@ Mean rounds per solution is 5,95498657226562
 Example with most rounds - 9 - is 52451
 
  - integration test over full range of keys
- - speed dial fab to reload round / game
  - randomized algo

@@ -139,7 +139,8 @@ describe('MastermindComponent', () => {
     ];
 
     testCases.forEach((test, index) => {
-      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
+      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white'
+      + ' and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
       () => {
         // act
         const result = component.IsWhitePtsIncrementable(test.check, settings);
@@ -168,7 +169,8 @@ describe('MastermindComponent', () => {
     ];
 
     testCases.forEach((test, index) => {
-      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
+      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white'
+      + ' and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
       () => {
         // act
         const result = component.IsBlackPtsIncrementable(test.check, settings);

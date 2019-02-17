@@ -41,5 +41,6 @@ For Swaszek algo with initial 34567 on Mastermind(5, 8):
 Mean rounds per solution is 5,95498657226562
 Example with most rounds - 9 - is 52451
 
+ 
  - integration test over full range of keys
  - randomized algo

@@ -179,4 +179,28 @@ describe('MastermindComponent', () => {
       });
     });
   });
+
+  describe(' IsGameWon', () => {
+    const settings = {
+      digits: 4, colors: 0,
+    };
+    const testCases = [
+      { check: { whitePts: settings.digits, blackPts: 0, }, is: true },
+      { check: { whitePts: 0, blackPts: 0, }, is: false },
+      { check: { whitePts: 4, blackPts: 1, }, is: false },
+      { check: { whitePts: 3, blackPts: 0, }, is: false },
+      { check: { whitePts: 2, blackPts: 2, }, is: false },
+    ];
+
+    testCases.forEach((test, index) => {
+      it(`[${index + 1}] for MM(${settings.digits}, ${settings.colors})'
+      '${test.check.whitePts} white and ${test.check.blackPts} black should be ${test.is} `,
+      () => {
+        // act
+        const result = component.IsGameWon(test.check, settings);
+        // assert
+        expect(result).toBe(test.is);
+      });
+    });
+  });
 });

@@ -25,15 +25,24 @@ export class MastermindComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.newGame();
+    this.newGame(this.settings);
   }
 
-  newGame() {
+  newGame(settings: IGameSettings): void {
     this.round = 0;
-    this.solver = new SwaszekSolverService(this.settings);
+    this.solver = new SwaszekSolverService(settings);
     this.roundModelViews = [];
-    this.currentRound = this.getNextRound();
+    this.startNextRound();
     this.cleanScore();
+  }
+
+  getNextRound(): IRoundModel {
+    ++this.round;
+    return new RoundModel(this.solver.getNextGuess(this.currentRound));
+  }
+
+  startNextRound() {
+    this.currentRound = this.getNextRound();
   }
 
   incrementWhite(): void {
@@ -57,20 +66,16 @@ export class MastermindComponent implements OnInit {
   }
 
   checkScore(): void {
-    if (this.currentRound.whitePts === this.settings.digits) {
+    if (this.IsGameWon(this.currentRound, this.settings)) {
       this.snackBar.open(` WIN IN ${this.round} ROUNDS, NICE`, 'OK', {
         duration: 5000,
       });
-      this.newGame();
+      this.newGame(this.settings);
     } else {
       this.roundModelViews.push(this.getCurrentRoundView());
-      this.currentRound = this.getNextRound();
+      this.startNextRound();
       this.updateLastRoundView();
     }
-  }
-
-  private getCurrentRoundView(): IRoundModelView {
-    return new RoundModelView(this.currentRound);
   }
 
   private updateLastRoundView() {
@@ -78,9 +83,12 @@ export class MastermindComponent implements OnInit {
     this.roundModelViews.push(this.getCurrentRoundView());
   }
 
-  getNextRound(): IRoundModel {
-    ++this.round;
-    return new RoundModel(this.solver.getNextGuess(this.currentRound));
+  private getCurrentRoundView(): IRoundModelView {
+    return new RoundModelView(this.currentRound);
+  }
+
+  public IsGameWon(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
+    return check.whitePts === settings.digits && check.blackPts == 0;
   }
 
   public IsAnswerCheckFull(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {

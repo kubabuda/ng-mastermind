@@ -4,6 +4,7 @@ import { RoundModel, IRoundModel, IMastermindAnswerCheck } from '../../models/ro
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
 import { IGameSettings, GameSettings } from '../../models/game.settings.model';
+import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
 
 
 @Component({
@@ -20,12 +21,14 @@ export class MastermindComponent implements OnInit {
   private settings: IGameSettings;
   private solver: ISolveMastermind;
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(
+    private snackBar: MatSnackBar,
+    private checkVerifyService: MastermindCheckVerifyService) {
     this.settings = new GameSettings(5, 8);
   }
 
   ngOnInit() {
-    this.newGame(this.settings);
+    this.startNewGame();
   }
 
   newGame(settings: IGameSettings): void {
@@ -37,7 +40,7 @@ export class MastermindComponent implements OnInit {
   }
 
   getNextRound(): IRoundModel {
-    ++this.round;
+    this.round += 1;
     return new RoundModel(this.solver.getNextGuess(this.currentRound));
   }
 
@@ -46,14 +49,14 @@ export class MastermindComponent implements OnInit {
   }
 
   incrementWhite(): void {
-    if (this.IsWhitePtsIncrementable(this.currentRound, this.settings)) {
+    if (this.checkVerifyService.IsWhitePtsIncrementable(this.currentRound, this.settings)) {
       this.currentRound.whitePts += 1;
       this.updateLastRoundView();
     }
   }
 
   incrementBlack(): void {
-    if (this.IsBlackPtsIncrementable(this.currentRound, this.settings)) {
+    if (this.checkVerifyService.IsBlackPtsIncrementable(this.currentRound, this.settings)) {
       this.currentRound.blackPts += 1;
       this.updateLastRoundView();
     }
@@ -66,7 +69,7 @@ export class MastermindComponent implements OnInit {
   }
 
   checkScore(): void {
-    if (this.IsGameWon(this.currentRound, this.settings)) {
+    if (this.checkVerifyService.IsGameWon(this.currentRound, this.settings)) {
       this.snackBar.open(` WIN IN ${this.round} ROUNDS, NICE`, 'OK', {
         duration: 5000,
       });
@@ -78,6 +81,10 @@ export class MastermindComponent implements OnInit {
     }
   }
 
+  startNewGame() {
+    this.newGame(this.settings);
+  }
+
   private updateLastRoundView() {
     this.roundModelViews.pop();
     this.roundModelViews.push(this.getCurrentRoundView());
@@ -85,21 +92,5 @@ export class MastermindComponent implements OnInit {
 
   private getCurrentRoundView(): IRoundModelView {
     return new RoundModelView(this.currentRound);
-  }
-
-  public IsGameWon(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
-    return check.whitePts === settings.digits && check.blackPts === 0;
-  }
-
-  public IsAnswerCheckFull(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
-    return check.whitePts + check.blackPts >= settings.digits;
-  }
-
-  public IsWhitePtsIncrementable(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
-    return !this.IsAnswerCheckFull(check, settings);
-  }
-
-  public IsBlackPtsIncrementable(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
-    return !this.IsAnswerCheckFull(check, settings) && check.whitePts + 1 < settings.digits;
   }
 }

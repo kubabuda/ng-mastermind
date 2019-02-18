@@ -4,6 +4,7 @@ import { NgcFloatButtonModule } from 'ngc-float-button';
 import { MastermindComponent } from './components/mastermind/mastermind.component';
 import { RoundStateComponent } from './components/round-state/round-state.component';
 import { MatButtonModule, MatIconModule, MatSnackBarModule } from '@angular/material';
+import { MastermindCheckVerifyService } from './services/mastermind-check-verify.service';
 
 @NgModule({
   declarations: [MastermindComponent, RoundStateComponent ],
@@ -14,5 +15,8 @@ import { MatButtonModule, MatIconModule, MatSnackBarModule } from '@angular/mate
     MatSnackBarModule,
     NgcFloatButtonModule
   ],
+  providers: [
+    MastermindCheckVerifyService,
+  ]
 })
 export class MastermindModule { }

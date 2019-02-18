@@ -3,17 +3,39 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MastermindComponent } from './mastermind.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
 
 describe('MastermindComponent', () => {
   let component: MastermindComponent;
   let fixture: ComponentFixture<MastermindComponent>;
+  let isBlackPtsIncrementable = false;
+  let isWhitePtsIncrementable = false;
+  let isGameWon = false;
+
+  const checkVerifySvcMock = {
+    IsBlackPtsIncrementable() {
+      return isBlackPtsIncrementable;
+    },
+    IsWhitePtsIncrementable() {
+      return isWhitePtsIncrementable;
+    },
+    IsGameWon() {
+      return isGameWon;
+    }
+  };
+
+  let wasSnackbarOpen = false;
+  const snackbarMock = { open() {
+    wasSnackbarOpen = true;
+  } };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MastermindComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers : [
-        { provide: MatSnackBar,  useValue: { open() {}  }, }
+        { provide: MatSnackBar,  useValue: snackbarMock, },
+        { provide: MastermindCheckVerifyService, useValue: checkVerifySvcMock }
       ]
     })
     .compileComponents();
@@ -53,6 +75,7 @@ describe('MastermindComponent', () => {
     describe('after incrementBlack', () => {
       beforeEach(() => {
         expect(component.currentRound.blackPts).toBe(0);
+        isBlackPtsIncrementable = true;
         component.incrementBlack();
       });
 
@@ -74,6 +97,7 @@ describe('MastermindComponent', () => {
     describe('after incrementWhite', () => {
       beforeAll(() => {
         expect(component.currentRound.whitePts).toBe(0);
+        isWhitePtsIncrementable = true;
       });
 
       it('white pts # should be 1', () => {
@@ -93,8 +117,9 @@ describe('MastermindComponent', () => {
       });
     });
 
-    describe('after checkScore', () => {
+    describe('after checkScore when game is not won', () => {
       beforeAll(() => {
+        wasSnackbarOpen = false;
         expect(component.roundModelViews.length).toBe(1);
         expect(component.round).toBe(1);
         component.checkScore();
@@ -116,90 +141,39 @@ describe('MastermindComponent', () => {
         it('next round should be started', () => {
           expect(component.roundModelViews.length).toBe(2);
         });
+
+        it('snackbar notification should not be opened', () => {
+          expect(wasSnackbarOpen).toBe(false);
+        });
       });
     });
-  });
 
-  describe('IsWhitePtsIncrementable', () => {
-    const settings = {
-      digits: 4, colors: 0,
-    };
-    const testCases = [
-      { check: { whitePts: 0, blackPts: 0, }, is: true },
-      { check: { whitePts: 4, blackPts: 0, }, is: false },
-      { check: { whitePts: 0, blackPts: 4, }, is: false },
-      { check: { whitePts: 2, blackPts: 2, }, is: false },
-      { check: { whitePts: 1, blackPts: 3, }, is: false },
-      { check: { whitePts: 3, blackPts: 1, }, is: false },
-      { check: { whitePts: 2, blackPts: 1, }, is: true },
-      { check: { whitePts: 3, blackPts: 0, }, is: true },
-      { check: { whitePts: 1, blackPts: 1, }, is: true },
-      { check: { whitePts: 5, blackPts: 1, }, is: false },
-      { check: { whitePts: 0, blackPts: 5, }, is: false },
-    ];
-
-    testCases.forEach((test, index) => {
-      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white'
-      + ' and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
-      () => {
+    describe('after checkScore when game is won', () => {
+      beforeEach(() => {
+        // setup
+        wasSnackbarOpen = false;
+        spyOn(snackbarMock, 'open');
+        isGameWon = false;
+        component.startNewGame();
+        component.checkScore();
+        component.checkScore();
+        expect(component.roundModelViews.length).toBe(3);
+        expect(component.round).toBe(3);
+        isGameWon = true;
         // act
-        const result = component.IsWhitePtsIncrementable(test.check, settings);
-        // assert
-        expect(result).toBe(test.is);
+        component.checkScore();
       });
-    });
-  });
 
-  describe('IsBlackPtsIncrementable', () => {
-    const settings = {
-      digits: 4, colors: 0,
-    };
-    const testCases = [
-      { check: { whitePts: 0, blackPts: 0, }, is: true },
-      { check: { whitePts: 4, blackPts: 0, }, is: false },
-      { check: { whitePts: 0, blackPts: 4, }, is: false },
-      { check: { whitePts: 2, blackPts: 2, }, is: false },
-      { check: { whitePts: 1, blackPts: 3, }, is: false },
-      { check: { whitePts: 3, blackPts: 1, }, is: false },
-      { check: { whitePts: 2, blackPts: 1, }, is: true },
-      { check: { whitePts: 3, blackPts: 0, }, is: false },
-      { check: { whitePts: 1, blackPts: 1, }, is: true },
-      { check: { whitePts: 5, blackPts: 1, }, is: false },
-      { check: { whitePts: 0, blackPts: 5, }, is: false },
-    ];
-
-    testCases.forEach((test, index) => {
-      it(`for MM(${settings.digits}, ${settings.colors}), ${test.check.whitePts} white'
-      + ' and ${test.check.blackPts} black should be ${test.is} [${index + 1}]`,
-      () => {
-        // act
-        const result = component.IsBlackPtsIncrementable(test.check, settings);
-        // assert
-        expect(result).toBe(test.is);
+      it('round view list should be restarted', () => {
+        expect(component.roundModelViews.length).toBe(1);
       });
-    });
-  });
 
-  describe(' IsGameWon', () => {
-    const settings = {
-      digits: 4, colors: 0,
-    };
-    const testCases = [
-      { check: { whitePts: settings.digits, blackPts: 0, }, is: true },
-      { check: { whitePts: 0, blackPts: 0, }, is: false },
-      { check: { whitePts: 4, blackPts: 1, }, is: false },
-      { check: { whitePts: 3, blackPts: 0, }, is: false },
-      { check: { whitePts: 2, blackPts: 2, }, is: false },
-    ];
+      it('round # should be reset', () => {
+        expect(component.round).toBe(1);
+      });
 
-    testCases.forEach((test, index) => {
-      it(`[${index + 1}] for MM(${settings.digits}, ${settings.colors})'
-      '${test.check.whitePts} white and ${test.check.blackPts} black should be ${test.is} `,
-      () => {
-        // act
-        const result = component.IsGameWon(test.check, settings);
-        // assert
-        expect(result).toBe(test.is);
+      it('snackbar notification should be opened', () => {
+        expect(wasSnackbarOpen).toBe(true);
       });
     });
   });

@@ -88,7 +88,7 @@ export class MastermindComponent implements OnInit {
   }
 
   public IsGameWon(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {
-    return check.whitePts === settings.digits && check.blackPts == 0;
+    return check.whitePts === settings.digits && check.blackPts === 0;
   }
 
   public IsAnswerCheckFull(check: IMastermindAnswerCheck, settings: IGameSettings): boolean {

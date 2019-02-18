@@ -13,9 +13,11 @@ export class MastermindAnswerCheck implements IMastermindAnswerCheck {
   }
 }
 
-export interface IRoundModel extends IMastermindAnswerCheck {
+export interface IMastermindAnswer {
   answer: string;
 }
+
+export interface IRoundModel extends IMastermindAnswerCheck, IMastermindAnswer { }
 
 export class RoundModel implements IRoundModel {
     public whitePts: number;

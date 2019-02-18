@@ -152,7 +152,6 @@ describe('MastermindComponent', () => {
       beforeEach(() => {
         // setup
         wasSnackbarOpen = false;
-        spyOn(snackbarMock, 'open');
         isGameWon = false;
         component.startNewGame();
         component.checkScore();

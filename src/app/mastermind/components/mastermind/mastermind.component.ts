@@ -41,7 +41,9 @@ export class MastermindComponent implements OnInit {
 
   getNextRound(): IRoundModel {
     this.round += 1;
-    return new RoundModel(this.solver.getNextGuess(this.currentRound));
+    const nextAnswer = this.solver.getNextGuess(this.currentRound);
+
+    return new RoundModel(nextAnswer);
   }
 
   startNextRound() {

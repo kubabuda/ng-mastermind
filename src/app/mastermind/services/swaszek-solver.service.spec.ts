@@ -6,11 +6,12 @@ import { GameSettings } from '../models/game.settings.model';
 describe('SwaszekSolverService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   let serviceUnderTest: SwaszekSolverService;
+  const mastermind46settings = new GameSettings(4, 6);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: GameSettings, useValue: new GameSettings(4, 6) },
+        { provide: GameSettings, useValue: mastermind46settings },
       ]
     });
   });
@@ -54,7 +55,8 @@ describe('SwaszekSolverService', () => {
   });
 
   describe('getNextGuess', () => {
-    beforeAll(() => {
+    beforeEach(() => {
+      serviceUnderTest = TestBed.get(SwaszekSolverService);
       expect(serviceUnderTest.round).toBe(0);
     });
 
@@ -68,13 +70,35 @@ describe('SwaszekSolverService', () => {
       expect(serviceUnderTest.round).toBe(1);
     });
 
-    it('should return prev answer if was valid for MM(4,6)', () => {
+    it('should return prev (first) answer if it was 100% valid for MM(4,6)', () => {
       // arrange
-      const prevCheck = { whitePts: 4, blackPts: 0, answer: '1111' };
+      const prevCheck = { whitePts: 4, blackPts: 0 };
       // act
       const guess = serviceUnderTest.getNextGuess(prevCheck);
       // assert
-      expect(guess).toBe('1111');
+      expect(guess).toBe(serviceUnderTest.getInitialGuess());
+      expect(guess).toBe('2345');
+    });
+  });
+
+  describe('if code was broken as 0345 in second round', () => {
+    beforeEach(() => {
+      serviceUnderTest = TestBed.get(SwaszekSolverService);
+      expect(serviceUnderTest.round).toBe(0);
+      const first = serviceUnderTest.getNextGuess({ whitePts: 3, blackPts: 0 });
+      expect(first).toBe('2345');
+
+      const second = serviceUnderTest.getNextGuess({ whitePts: 3, blackPts: 0 });
+      expect(second).toBe('0345');
+    });
+
+    it('should return 0345 for 4wh 0bl ', () => {
+      // arrange
+      const prevCheck = { whitePts: 4, blackPts: 0 };
+      // act
+      const guess = serviceUnderTest.getNextGuess(prevCheck);
+      // assert
+      expect(guess).toBe('0345');
     });
   });
 
@@ -131,17 +155,17 @@ describe('SwaszekSolverService', () => {
 
   describe('prunedKeys', () => {
     const testCases = [
-      { keys: [ '1111', '2222'], answer: '1111', white: 0, black: 0, after: [ '2222' ] },
-      { keys: [ '1111', '2222', '2233', '3333'], answer: '1111', white: 0, black: 0, after: [ '2222', '2233', '3333' ] },
+      { keys: [ '1111', '2222'], answer: '1111', check: { whitePts: 0, blackPts: 0, }, after: [ '2222' ] },
+      { keys: [ '1111', '2222', '2233', '3333'], answer: '1111', check: { whitePts: 0, blackPts: 0, }, after: [ '2222', '2233', '3333' ] },
     ];
 
     testCases.forEach((test, index) => {
-      it(`[${index + 1}] for ${test.keys}, a${test.answer}, check ${test.white} white and ${test.black} black should return ${test.after} `,
+      it(`[${index + 1}] for ${test.keys}, a${test.answer}, check ${test.check.whitePts} white and ${test.check.blackPts} black'
+       + ' should return ${test.after} `,
       () => {
         // arrange
-        const check = { whitePts: test.white, blackPts: test.black, answer: test.answer, };
         // act
-        const result = serviceUnderTest.prunedKeys(test.keys, check);
+        const result = serviceUnderTest.prunedKeys(test.keys, test.answer, test.check);
         // assert
         expect(result).toEqual(test.after);
       });

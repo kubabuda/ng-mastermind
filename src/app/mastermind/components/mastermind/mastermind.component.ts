@@ -7,6 +7,10 @@ import { IGameSettings, GameSettings } from '../../models/game.settings.model';
 import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
 
 
+export interface IMastermindGame {
+  newGame(settings: IGameSettings): void;
+}
+
 @Component({
   selector: 'app-mastermind',
   templateUrl: './mastermind.component.html',

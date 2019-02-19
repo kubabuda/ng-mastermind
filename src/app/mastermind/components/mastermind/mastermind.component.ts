@@ -8,8 +8,14 @@ import { MastermindCheckVerifyService } from '../../services/mastermind-check-ve
 
 
 export interface IMastermindGame {
+  currentRound: IRoundModel;
   newGame(settings: IGameSettings): void;
+  isGameWon(roundCheck: IMastermindAnswerCheck): boolean;
 }
+
+// export class MastermindGame implements IMastermindGame {
+
+// }
 
 @Component({
   selector: 'app-mastermind',
@@ -39,20 +45,30 @@ export class MastermindComponent implements OnInit {
     this.round = 0;
     this.solver = new SwaszekSolverService(settings);
     this.roundModelViews = [];
-    this.startNextRound();
+    this.currentRound = this.getNextRound(this.currentRound);
     this.cleanScore();
   }
 
-  getNextRound(): IRoundModel {
+  getNextRound(check: IMastermindAnswerCheck): IRoundModel {
     this.round += 1;
-    const nextAnswer = this.solver.getNextGuess(this.currentRound);
+    const nextAnswer = this.solver.getNextGuess(check);
 
     return new RoundModel(nextAnswer);
   }
 
-  startNextRound() {
-    this.currentRound = this.getNextRound();
+  isGameWon(roundCheck: IMastermindAnswerCheck): boolean {
+    if (this.checkVerifyService.IsGameWon(roundCheck, this.settings)) {
+      this.newGame(this.settings);
+
+      return true;
+    } else {
+      this.startNextRound();
+
+      return false;
+    }
   }
+
+  // methods exposed to template
 
   incrementWhite(): void {
     if (this.checkVerifyService.IsWhitePtsIncrementable(this.currentRound, this.settings)) {
@@ -75,20 +91,22 @@ export class MastermindComponent implements OnInit {
   }
 
   checkScore(): void {
-    if (this.checkVerifyService.IsGameWon(this.currentRound, this.settings)) {
+    if (this.isGameWon(this.currentRound)) {
       this.snackBar.open(` WIN IN ${this.round} ROUNDS, NICE`, 'OK', {
         duration: 5000,
       });
-      this.newGame(this.settings);
     } else {
       this.roundModelViews.push(this.getCurrentRoundView());
-      this.startNextRound();
-      this.updateLastRoundView();
     }
+    this.updateLastRoundView();
   }
 
   startNewGame() {
     this.newGame(this.settings);
+  }
+
+  startNextRound() {
+    this.currentRound = this.getNextRound(this.currentRound);
   }
 
   private updateLastRoundView() {

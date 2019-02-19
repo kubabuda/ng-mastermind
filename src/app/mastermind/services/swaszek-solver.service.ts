@@ -6,7 +6,7 @@ import { error } from 'util';
 export interface ISolveMastermind {
   // watch out: first round check is ignored!
   getNextGuess(prevRoundCheck: IMastermindAnswerCheck): string;
-  // maybe separate getFirstGuess() should be exposed?
+  // maybe separate getFirstGuess() should be exposed? after separating game logic from component
 }
 
 
@@ -26,7 +26,7 @@ export class SwaszekSolverService implements ISolveMastermind  {
   getNextGuess(roundCheck: IMastermindAnswerCheck): string {
     ++this.round;
     if (this.round === 1) {
-      // first round check values is ignored
+      // first round check: values is ignored
       this.codeGuess = this.getInitialGuess();
     } else {
       this.keys = this.prunedKeys(this.keys, this.codeGuess, roundCheck);

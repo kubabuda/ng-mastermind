@@ -61,26 +61,26 @@ describe('MastermindComponent', () => {
     });
 
     it('round # should be 1', () => {
-      expect(component.round).toBe(1);
+      expect(component.game.roundNo).toBe(1);
     });
 
     it('white pts # should be 0', () => {
-      expect(component.currentRound.whitePts).toBe(0);
+      expect(component.game.currentRound.whitePts).toBe(0);
     });
 
     it('black pts # should be 0', () => {
-      expect(component.currentRound.blackPts).toBe(0);
+      expect(component.game.currentRound.blackPts).toBe(0);
     });
 
     describe('after incrementBlack', () => {
       beforeEach(() => {
-        expect(component.currentRound.blackPts).toBe(0);
+        expect(component.game.currentRound.blackPts).toBe(0);
         isBlackPtsIncrementable = true;
         component.incrementBlack();
       });
 
       it('black pts # should be 1', () => {
-        expect(component.currentRound.blackPts).toBe(1);
+        expect(component.game.currentRound.blackPts).toBe(1);
       });
 
       describe('cleanScore', () => {
@@ -89,30 +89,30 @@ describe('MastermindComponent', () => {
         });
 
         it('black pts # should be 0', () => {
-          expect(component.currentRound.blackPts).toBe(0);
+          expect(component.game.currentRound.blackPts).toBe(0);
         });
       });
     });
 
     describe('after incrementWhite', () => {
       beforeAll(() => {
-        expect(component.currentRound.whitePts).toBe(0);
+        expect(component.game.currentRound.whitePts).toBe(0);
         isWhitePtsIncrementable = true;
       });
 
       it('white pts # should be 1', () => {
         component.incrementWhite();
-        expect(component.currentRound.whitePts).toBe(1);
+        expect(component.game.currentRound.whitePts).toBe(1);
       });
 
       describe('after cleanScore', () => {
         beforeAll(() => {
-          expect(component.currentRound.whitePts).toBe(1);
+          expect(component.game.currentRound.whitePts).toBe(1);
           component.cleanScore();
         });
 
         it('white pts # should be 0', () => {
-          expect(component.currentRound.whitePts).toBe(0);
+          expect(component.game.currentRound.whitePts).toBe(0);
         });
       });
     });
@@ -121,7 +121,7 @@ describe('MastermindComponent', () => {
       beforeAll(() => {
         wasSnackbarOpen = false;
         expect(component.roundModelViews.length).toBe(1);
-        expect(component.round).toBe(1);
+        expect(component.game.roundNo).toBe(1);
         component.checkScore();
       });
 
@@ -135,7 +135,7 @@ describe('MastermindComponent', () => {
         });
 
         it('round # should be incremented', () => {
-          expect(component.round).toBe(2);
+          expect(component.game.roundNo).toBe(2);
         });
 
         it('next round should be started', () => {
@@ -157,7 +157,7 @@ describe('MastermindComponent', () => {
         component.checkScore();
         component.checkScore();
         expect(component.roundModelViews.length).toBe(3);
-        expect(component.round).toBe(3);
+        expect(component.game.roundNo).toBe(3);
         isGameWon = true;
         // act
         component.checkScore();
@@ -168,7 +168,7 @@ describe('MastermindComponent', () => {
       });
 
       it('round # should be reset', () => {
-        expect(component.round).toBe(1);
+        expect(component.game.roundNo).toBe(1);
       });
 
       it('snackbar notification should be opened', () => {

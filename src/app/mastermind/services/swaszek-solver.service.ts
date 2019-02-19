@@ -41,6 +41,7 @@ export class SwaszekSolverService implements ISolveMastermind  {
   }
 
   getInitialGuess(): string {
+    // todo: randomize
     let result = '';
     for (let digit = 1; digit <= this.settings.digits; digit++) {
       result = `${this.settings.colors - digit}${result}`;

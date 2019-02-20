@@ -8,7 +8,7 @@ import { MastermindCheckVerifyService } from '../../services/mastermind-check-ve
 describe('MastermindComponent', () => {
   let component: MastermindComponent;
   let fixture: ComponentFixture<MastermindComponent>;
-  
+
   let isBlackPtsIncrementable = false;
   let isWhitePtsIncrementable = false;
   let isGameWon = false;

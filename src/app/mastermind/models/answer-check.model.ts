@@ -2,7 +2,7 @@ export interface IMastermindAnswerCheck {
   whitePts: number;
   blackPts: number;
 }
-  
+
 export class MastermindAnswerCheck implements IMastermindAnswerCheck {
   whitePts: number;
   blackPts: number;
@@ -12,4 +12,3 @@ export class MastermindAnswerCheck implements IMastermindAnswerCheck {
     this.blackPts = black;
   }
 }
-  

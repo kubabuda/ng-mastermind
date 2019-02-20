@@ -8,15 +8,13 @@ import { IRoundModel } from '../models/round.model';
 describe('MastermindGameService', () => {
   let service: MastermindGameService;
 
-  let isBlackPtsIncrementable = false;
-  let isWhitePtsIncrementable = false;
   let isGameWon = false;
   const checkVerifySvcMock = {
     IsBlackPtsIncrementable() {
-      return isBlackPtsIncrementable;
+      return false;
     },
     IsWhitePtsIncrementable() {
-      return isWhitePtsIncrementable;
+      return false;
     },
     IsGameWon() {
       return isGameWon;
@@ -55,26 +53,24 @@ describe('MastermindGameService', () => {
     it('black pts # should be 0', () => {
       expect(service.currentRound.blackPts).toBe(0);
     });
-    
-    
+
     describe('after checkScore when game is not won', () => {
       let answer1: IRoundModel;
       beforeAll(() => {
         expect(service.roundNo).toBe(1);
         answer1 = service.getNextRound({ whitePts: 3, blackPts: 0 });
       });
-      
-      
+
       it('round # should be incremented', () => {
         expect(service.roundNo).toBe(2);
       });
-      
+
       describe('after second checkScore', () => {
         let answer2: IRoundModel;
         beforeAll(() => {
           answer2 = service.getNextRound({ whitePts: 3, blackPts: 0 });
         });
-        
+
         it('round # should be incremented', () => {
           expect(service.roundNo).toBe(3);
         });
@@ -82,7 +78,7 @@ describe('MastermindGameService', () => {
         it('round # should be incremented', () => {
           expect(service.roundNo).toBe(3);
         });
-        
+
         describe('when game is reset', () => {
           beforeEach(() => {
             // setup
@@ -92,7 +88,7 @@ describe('MastermindGameService', () => {
 
           it('round # should be reset', () => {
             expect(service.roundNo).toBe(1);
-          });  
+          });
         });
       });
     });

@@ -52,15 +52,24 @@ export class MastermindComponent implements OnInit {
 
   checkScore(): void {
     if (this.game.isGameWon(this.game.currentRound)) {
-      this.snackBar.open(` WIN IN ${this.game.roundNo} ROUNDS, NICE`, 'OK', {
-        duration: 5000,
-      });
+      this.snackbarNotify(`Win in ${this.game.roundNo} rounds, nice`);
       this.startNewGame();
     } else {
-      this.startNextRound();
-      this.roundModelViews.push(this.getCurrentRoundView());
+      try {
+        this.startNextRound();
+        this.roundModelViews.push(this.getCurrentRoundView());
+      } catch (error) {
+        this.snackbarNotify(`This looks impossible. Type checks again`);
+        this.startNewGame();      
+      }
     }
     this.updateLastRoundView();
+  }
+
+  private snackbarNotify(message: string) {
+    this.snackBar.open(message, 'OK', {
+      duration: 5000,
+    });
   }
 
   startNewGame() {

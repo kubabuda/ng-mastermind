@@ -8,10 +8,10 @@ import { MastermindCheckVerifyService } from '../../services/mastermind-check-ve
 describe('MastermindComponent', () => {
   let component: MastermindComponent;
   let fixture: ComponentFixture<MastermindComponent>;
+  
   let isBlackPtsIncrementable = false;
   let isWhitePtsIncrementable = false;
   let isGameWon = false;
-
   const checkVerifySvcMock = {
     IsBlackPtsIncrementable() {
       return isBlackPtsIncrementable;
@@ -39,13 +39,10 @@ describe('MastermindComponent', () => {
       ]
     })
     .compileComponents();
-  }));
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(MastermindComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -58,10 +55,6 @@ describe('MastermindComponent', () => {
 
     it('roundModelViews should have inital state', () => {
       expect(component.roundModelViews.length).toBe(1);
-    });
-
-    it('round # should be 1', () => {
-      expect(component.game.roundNo).toBe(1);
     });
 
     it('white pts # should be 0', () => {
@@ -86,10 +79,6 @@ describe('MastermindComponent', () => {
       describe('cleanScore', () => {
         beforeEach(() => {
           component.cleanScore();
-        });
-
-        it('black pts # should be 0', () => {
-          expect(component.game.currentRound.blackPts).toBe(0);
         });
       });
     });
@@ -121,7 +110,6 @@ describe('MastermindComponent', () => {
       beforeAll(() => {
         wasSnackbarOpen = false;
         expect(component.roundModelViews.length).toBe(1);
-        expect(component.game.roundNo).toBe(1);
         component.checkScore();
       });
 
@@ -132,10 +120,6 @@ describe('MastermindComponent', () => {
       describe('after second checkScore', () => {
         beforeEach(() => {
           component.checkScore();
-        });
-
-        it('round # should be incremented', () => {
-          expect(component.game.roundNo).toBe(2);
         });
 
         it('next round should be started', () => {
@@ -165,10 +149,6 @@ describe('MastermindComponent', () => {
 
       it('round view list should be restarted', () => {
         expect(component.roundModelViews.length).toBe(1);
-      });
-
-      it('round # should be reset', () => {
-        expect(component.game.roundNo).toBe(1);
       });
 
       it('snackbar notification should be opened', () => {

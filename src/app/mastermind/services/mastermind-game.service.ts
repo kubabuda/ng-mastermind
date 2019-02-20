@@ -17,10 +17,8 @@ export interface IMastermindGameService {
 @Injectable({
   providedIn: 'root'
 })
-// TODO move to service (specs too)
 export class MastermindGameService implements IMastermindGameService {
   currentRound: IRoundModel;
-  // currentRoundCheck: IRoundModel;
   roundNo = 0;
   private settings: IGameSettings;
   private solver: ISolveMastermind;
@@ -31,21 +29,17 @@ export class MastermindGameService implements IMastermindGameService {
     this.settings = settings;
     this.roundNo = 0;
     this.solver = new SwaszekSolverService(settings);
-    this.currentRound = this.getNextRound(this.currentRound); // round is null here but first value is ignored
+    this.currentRound = this.getNextRound(this.currentRound); // currentRound is null here but first value is ignored
   }
 
   getNextRound(check: IMastermindAnswerCheck): IRoundModel {
     this.roundNo += 1;
     const nextAnswer = this.solver.getNextGuess(check);
 
-    return new RoundModel(nextAnswer); // TODO split to take separate check and answer
+    return new RoundModel(nextAnswer);
   }
 
   isGameWon(roundCheck: IMastermindAnswerCheck): boolean {
-    if (this.checkVerifyService.IsGameWon(roundCheck, this.settings)) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.checkVerifyService.IsGameWon(roundCheck, this.settings);
   }
 }

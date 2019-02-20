@@ -60,7 +60,7 @@ export class MastermindComponent implements OnInit {
         this.roundModelViews.push(this.getCurrentRoundView());
       } catch (error) {
         this.snackbarNotify(`This looks impossible. Type checks again`);
-        this.startNewGame();      
+        this.startNewGame();
       }
     }
     this.updateLastRoundView();

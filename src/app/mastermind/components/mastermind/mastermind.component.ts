@@ -1,53 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { IMastermindAnswerCheck } from './models/answer-check.model';
-import { RoundModel, IRoundModel } from '../../models/round.model';
+
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
-import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
 import { IGameSettings, GameSettings } from '../../models/game.settings.model';
 import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
+import { IMastermindGameService, MastermindGameService } from '../../services/mastermind-game.service';
 
-
-export interface IMastermindGame {
-  currentRound: IRoundModel;
-  roundNo: number;
-  newGame(settings: IGameSettings): void;
-  getNextRound(check: IMastermindAnswerCheck): IRoundModel;
-  isGameWon(roundCheck: IMastermindAnswerCheck): boolean;
-}
-
-// TODO move to service (specs too)
-export class MastermindGame implements IMastermindGame {
-  currentRound: IRoundModel;
-  // currentRoundCheck: IRoundModel;
-  roundNo = 0;
-  private settings: IGameSettings;
-  private solver: ISolveMastermind;
-
-  constructor(private checkVerifyService: MastermindCheckVerifyService) { }
-
-  newGame(settings: IGameSettings): void {
-    this.settings = settings;
-    this.roundNo = 0;
-    this.solver = new SwaszekSolverService(settings);
-    this.currentRound = this.getNextRound(this.currentRound); // round is null here but first value is ignored
-  }
-
-  getNextRound(check: IMastermindAnswerCheck): IRoundModel {
-    this.roundNo += 1;
-    const nextAnswer = this.solver.getNextGuess(check);
-
-    return new RoundModel(nextAnswer); // TODO split to take separate check and answer
-  }
-
-  isGameWon(roundCheck: IMastermindAnswerCheck): boolean {
-    if (this.checkVerifyService.IsGameWon(roundCheck, this.settings)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
 
 @Component({
   selector: 'app-mastermind',
@@ -57,7 +15,7 @@ export class MastermindGame implements IMastermindGame {
 export class MastermindComponent implements OnInit {
 
   roundModelViews: IRoundModelView[];
-  game: IMastermindGame;
+  game: IMastermindGameService;
   // currentRoundCheck: IRoundModel;
   private settings: IGameSettings;
 
@@ -65,7 +23,7 @@ export class MastermindComponent implements OnInit {
     private snackBar: MatSnackBar,
     private checkVerifyService: MastermindCheckVerifyService) {
     this.settings = new GameSettings(5, 8);
-    this.game = new MastermindGame(checkVerifyService);
+    this.game = new MastermindGameService(checkVerifyService);
   }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GameSettings } from '../models/game.settings.model';
-import { IMastermindAnswerCheck, MastermindAnswerCheck } from '../models/round.model';
+import { IMastermindAnswerCheck, MastermindAnswerCheck } from '../models/answer-check.model';
 import { error } from 'util';
 
 export interface ISolveMastermind {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IMastermindAnswerCheck } from '../models/round.model';
+import { IMastermindAnswerCheck } from '../models/answer-check.model';
 import { IGameSettings } from '../models/game.settings.model';
 
 @Injectable({

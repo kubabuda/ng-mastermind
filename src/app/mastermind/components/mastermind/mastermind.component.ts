@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { RoundModel, IRoundModel, IMastermindAnswerCheck } from '../../models/round.model';
+import { IMastermindAnswerCheck } from './models/answer-check.model';
+import { RoundModel, IRoundModel } from '../../models/round.model';
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { ISolveMastermind, SwaszekSolverService } from '../../services/swaszek-solver.service';
 import { IGameSettings, GameSettings } from '../../models/game.settings.model';

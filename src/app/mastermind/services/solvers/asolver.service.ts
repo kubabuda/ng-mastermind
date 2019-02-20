@@ -1,58 +1,23 @@
-import { Injectable } from '@angular/core';
-import { GameSettings, IGameSettings } from '../models/game.settings.model';
-import { IMastermindAnswerCheck, MastermindAnswerCheck } from '../models/answer-check.model';
+import { IGameSettings } from '../../models/game.settings.model';
+import { IMastermindAnswerCheck, MastermindAnswerCheck } from '../../models/answer-check.model';
 import { error } from 'util';
 
-export interface ISolveMastermind {
-  // watch out: first round check is ignored!
-  getNextGuess(prevRoundCheck: IMastermindAnswerCheck): string;
-  // maybe separate getFirstGuess() should be exposed? after separating game logic from component
-}
 
 export interface IGenerateKeyRange {
   getAllKeysRange(settings: IGameSettings): string[];
 }
 
+export interface ICheckAnswers {
+  checkAnswer(answer1: string, answer2: string): IMastermindAnswerCheck;
+  isAnswerCheckResultEqual(answer1: string, answer2: string, check: IMastermindAnswerCheck): boolean;
+}
 
-@Injectable({
-  providedIn: 'root'
-})
-export class SwaszekSolverService implements ISolveMastermind, IGenerateKeyRange {
-  round: number;
-  keys: Array<string>;
-  codeGuess: string;
+export interface IPruneKeys {
+  keysPossibleAfterGuess(possibleKeys: string[], keyGuess: string, check: IMastermindAnswerCheck): string[];
+}
 
-  constructor(private settings: GameSettings) {
-    this.round = 0;
-    this.keys = this.getKeysRange(this.settings.digits, settings.colors);
-  }
 
-  getNextGuess(roundCheck: IMastermindAnswerCheck): string {
-    ++this.round;
-    if (this.round === 1) {
-      // first round check: values is ignored
-      this.codeGuess = this.getInitialGuess();
-    } else {
-      this.keys = this.prunedKeys(this.keys, this.codeGuess, roundCheck);
-      if (this.keys !== null && this.keys !== [] && this.keys.length > 0) {
-        this.codeGuess = this.keys[0];
-      } else {
-        throw new error('No keys left in solver!');
-      }
-    }
-
-    return this.codeGuess;
-  }
-
-  getInitialGuess(): string {
-    // todo: randomize
-    let result = '';
-    for (let digit = 1; digit <= this.settings.digits; digit++) {
-      result = `${this.settings.colors - digit}${result}`;
-    }
-
-    return result;
-  }
+export abstract class ASolverService implements IGenerateKeyRange {
 
   getAllKeysRange(settings: IGameSettings): string[] {
     return this.getKeysRange(settings.digits, settings.colors);
@@ -113,7 +78,7 @@ export class SwaszekSolverService implements ISolveMastermind, IGenerateKeyRange
     return result;
   }
 
-  prunedKeys(possibleKeys: string[], keyGuess: string, check: IMastermindAnswerCheck): string[] {
+  keysPossibleAfterGuess(possibleKeys: string[], keyGuess: string, check: IMastermindAnswerCheck): string[] {
     const result = [];
 
     possibleKeys.forEach(key => {

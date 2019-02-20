@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IMastermindAnswerCheck } from '../models/answer-check.model';
 import { IGameSettings } from '../models/game.settings.model';
 import { IRoundModel, RoundModel } from '../models/round.model';
-import { ISolveMastermind, SwaszekSolverService } from './swaszek-solver.service';
+import { ISolveMastermind, SwaszekSolverService } from './solvers/swaszek-solver.service';
 import { MastermindCheckVerifyService } from './mastermind-check-verify.service';
 
 export interface IMastermindGameService {

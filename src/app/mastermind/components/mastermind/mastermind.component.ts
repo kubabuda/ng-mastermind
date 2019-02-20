@@ -5,6 +5,7 @@ import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { IGameSettings, GameSettings } from '../../models/game.settings.model';
 import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
 import { IMastermindGameService, MastermindGameService } from '../../services/mastermind-game.service';
+import { IMastermindAnswerCheck } from '../../models/answer-check.model';
 
 
 @Component({
@@ -15,9 +16,8 @@ import { IMastermindGameService, MastermindGameService } from '../../services/ma
 export class MastermindComponent implements OnInit {
 
   roundModelViews: IRoundModelView[];
-  game: IMastermindGameService;
-  // currentRoundCheck: IRoundModel;
-  private settings: IGameSettings;
+  protected game: IMastermindGameService;
+  protected settings: IGameSettings;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -30,15 +30,19 @@ export class MastermindComponent implements OnInit {
     this.startNewGame();
   }
 
+  currentRoundCheck(): IMastermindAnswerCheck {
+    return this.game.currentRound;
+  }
+
   incrementWhite(): void {
-    if (this.checkVerifyService.IsWhitePtsIncrementable(this.game.currentRound, this.settings)) {
+    if (this.checkVerifyService.IsWhitePtsIncrementable(this.currentRoundCheck(), this.settings)) {
       this.game.currentRound.whitePts += 1;
       this.updateLastRoundView();
     }
   }
 
   incrementBlack(): void {
-    if (this.checkVerifyService.IsBlackPtsIncrementable(this.game.currentRound, this.settings)) {
+    if (this.checkVerifyService.IsBlackPtsIncrementable(this.currentRoundCheck(), this.settings)) {
       this.game.currentRound.blackPts += 1;
       this.updateLastRoundView();
     }
@@ -51,7 +55,7 @@ export class MastermindComponent implements OnInit {
   }
 
   checkScore(): void {
-    if (this.game.isGameWon(this.game.currentRound)) {
+    if (this.game.isGameWon(this.currentRoundCheck())) {
       this.snackbarNotify(`Win in ${this.game.roundNo} rounds, nice`);
       this.startNewGame();
     } else {

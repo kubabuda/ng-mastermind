@@ -58,22 +58,22 @@ describe('MastermindComponent', () => {
     });
 
     it('white pts # should be 0', () => {
-      expect(component.game.currentRound.whitePts).toBe(0);
+      expect(component.currentRoundCheck().whitePts).toBe(0);
     });
 
     it('black pts # should be 0', () => {
-      expect(component.game.currentRound.blackPts).toBe(0);
+      expect(component.currentRoundCheck().blackPts).toBe(0);
     });
 
     describe('after incrementBlack', () => {
       beforeEach(() => {
-        expect(component.game.currentRound.blackPts).toBe(0);
+        expect(component.currentRoundCheck().blackPts).toBe(0);
         isBlackPtsIncrementable = true;
         component.incrementBlack();
       });
 
       it('black pts # should be 1', () => {
-        expect(component.game.currentRound.blackPts).toBe(1);
+        expect(component.currentRoundCheck().blackPts).toBe(1);
       });
 
       describe('cleanScore', () => {
@@ -85,23 +85,23 @@ describe('MastermindComponent', () => {
 
     describe('after incrementWhite', () => {
       beforeAll(() => {
-        expect(component.game.currentRound.whitePts).toBe(0);
+        expect(component.currentRoundCheck().whitePts).toBe(0);
         isWhitePtsIncrementable = true;
       });
 
       it('white pts # should be 1', () => {
         component.incrementWhite();
-        expect(component.game.currentRound.whitePts).toBe(1);
+        expect(component.currentRoundCheck().whitePts).toBe(1);
       });
 
       describe('after cleanScore', () => {
         beforeAll(() => {
-          expect(component.game.currentRound.whitePts).toBe(1);
+          expect(component.currentRoundCheck().whitePts).toBe(1);
           component.cleanScore();
         });
 
         it('white pts # should be 0', () => {
-          expect(component.game.currentRound.whitePts).toBe(0);
+          expect(component.currentRoundCheck().whitePts).toBe(0);
         });
       });
     });
@@ -141,7 +141,6 @@ describe('MastermindComponent', () => {
         component.checkScore();
         component.checkScore();
         expect(component.roundModelViews.length).toBe(3);
-        expect(component.game.roundNo).toBe(3);
         isGameWon = true;
         // act
         component.checkScore();

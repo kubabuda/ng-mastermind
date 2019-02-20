@@ -5,7 +5,7 @@ import { MastermindComponent } from './components/mastermind/mastermind.componen
 import { RoundStateComponent } from './components/round-state/round-state.component';
 import { MatButtonModule, MatIconModule, MatSnackBarModule } from '@angular/material';
 import { MastermindCheckVerifyService } from './services/mastermind-check-verify.service';
-import { SwaszekSolverService } from './services/swaszek-solver.service';
+import { SwaszekSolverService } from './services/solvers/swaszek-solver.service';
 
 @NgModule({
   declarations: [MastermindComponent, RoundStateComponent ],

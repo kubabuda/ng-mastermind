@@ -1,19 +1,16 @@
-.gameState {
-  width: 1000px;
+.content {
+  min-height: calc(100vh - 70px);
+  max-width: 1000px;
 }
-
-.button-row {
-  /* bottom: 20px;
-  left: 20px;
-  position: absolute; */
-
+.footer {
+  height: 50px;
+  margin-left: 50%;
 }
 
 .button-row button,
 .button-row a {
   margin-right: 8px;
 }
-
 
 .mat-fab.mat-accent {
   background-color: white;
@@ -23,14 +20,6 @@
 .mat-fab.mat-warn {
   background-color: black;
 }
-
-ngc-float-button  {
-  /* bottom: 20px;
-  right: 20px;
-  position: absolute; */
-}
-
-/* BIGGER ? */
 
 ngc-float-button /deep/ .content {
   margin-right: 55px;

@@ -1,9 +1,10 @@
-<app-round-state class="gameState" *ngFor="let round of roundModelViews"
-  [modelView]="round">
-</app-round-state>
+<main class="content">
+  <app-round-state class="gameState" *ngFor="let round of roundModelViews"
+    [modelView]="round">
+  </app-round-state>
+</main>
 
-<!-- todo style buttons -->
-<div class="button-row"> 
+<footer class="footer">
   <button mat-fab (click)="incrementWhite()" matTooltip="Add white point">
     <mat-icon aria-label="Add white point" color="black">check_circle_outline</mat-icon>
   </button>
@@ -18,4 +19,4 @@
     <ngc-float-item-button (click)="cleanScore()" icon="skip_previous" content="retype score"></ngc-float-item-button>
     <ngc-float-item-button (click)="startNewGame()" icon="autorenew" content="new game"></ngc-float-item-button>
   </ngc-float-button>
-</div>
+</footer>

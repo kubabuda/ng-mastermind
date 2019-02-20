@@ -5,18 +5,19 @@
 </main>
 
 <footer class="footer">
-  <button mat-fab (click)="incrementWhite()" matTooltip="Add white point">
+  <button mat-fab (click)="startNewGame()" color="primary">
+    <mat-icon aria-label="Start new game">autorenew</mat-icon>
+  </button>
+  <button mat-fab (click)="cleanScore()" color="primary">
+    <mat-icon aria-label="Clean round score">skip_previous</mat-icon>
+  </button>
+  <button mat-fab (click)="incrementWhite()">
     <mat-icon aria-label="Add white point" color="black">check_circle_outline</mat-icon>
   </button>
-  <button mat-fab (click)="incrementBlack()" color="warn" matTooltip="Add black point">
+  <button mat-fab (click)="incrementBlack()" color="warn">
     <mat-icon aria-label="Add black point">check_circle_outline</mat-icon>
   </button>
-  <button mat-fab (click)="checkScore()" color="primary" matTooltip="Finish round">
+  <button mat-fab (click)="checkScore()" color="primary">
     <mat-icon aria-label="Finish round">done</mat-icon>
   </button>
-
-  <ngc-float-button icon="add" direction="right" color="red">
-    <ngc-float-item-button (click)="cleanScore()" icon="skip_previous" content="retype score"></ngc-float-item-button>
-    <ngc-float-item-button (click)="startNewGame()" icon="autorenew" content="new game"></ngc-float-item-button>
-  </ngc-float-button>
 </footer>

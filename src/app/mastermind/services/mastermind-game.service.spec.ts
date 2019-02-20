@@ -1,5 +1,4 @@
 import { TestBed, async, } from '@angular/core/testing';
-
 import { MastermindGameService } from './mastermind-game.service';
 import { MastermindCheckVerifyService } from './mastermind-check-verify.service';
 import { GameSettings } from '../models/game.settings.model';

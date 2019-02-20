@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameSettings } from '../models/game.settings.model';
+import { GameSettings, IGameSettings } from '../models/game.settings.model';
 import { IMastermindAnswerCheck, MastermindAnswerCheck } from '../models/answer-check.model';
 import { error } from 'util';
 
@@ -9,11 +9,15 @@ export interface ISolveMastermind {
   // maybe separate getFirstGuess() should be exposed? after separating game logic from component
 }
 
+export interface IGenerateKeyRange {
+  getAllKeysRange(settings: IGameSettings): string[];
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class SwaszekSolverService implements ISolveMastermind  {
+export class SwaszekSolverService implements ISolveMastermind, IGenerateKeyRange {
   round: number;
   keys: Array<string>;
   codeGuess: string;
@@ -48,6 +52,10 @@ export class SwaszekSolverService implements ISolveMastermind  {
     }
 
     return result;
+  }
+
+  getAllKeysRange(settings: IGameSettings): string[] {
+    return this.getKeysRange(settings.digits, settings.colors);
   }
 
   getKeysRange(digits: number, colors: number): string[] {

@@ -4,7 +4,8 @@
 }
 .footer {
   height: 50px;
-  margin-left: 50%;
+  /* margin-right: 40%; */
+  float: right;
 }
 
 .button-row button,
@@ -19,14 +20,4 @@
 
 .mat-fab.mat-warn {
   background-color: black;
-}
-
-ngc-float-button /deep/ .content {
-  margin-right: 55px;
-}
-
-ngc-float-button /deep/ .fab-toggle,
-ngc-float-button /deep/ .fab-item,
-ngc-float-button /deep/ .content {
-  transform: scale(1.1);
 }

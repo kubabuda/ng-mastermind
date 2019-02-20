@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SwaszekSolverService } from './swaszek-solver.service';
+import { SwaszekSolverService, IGenerateKeyRange } from './swaszek-solver.service';
 import { GameSettings } from '../models/game.settings.model';
 
 describe('SwaszekSolverService', () => {
@@ -34,7 +34,24 @@ describe('SwaszekSolverService', () => {
     });
 
     it('should return 1296 elems for MM(4, 6)', () => {
-      const result: string[] = serviceUnderTest.getKeysRange(4, 6);
+      const result: string[] = serviceUnderTest.getKeysRange(mastermind46settings.digits,
+        mastermind46settings.colors);
+
+      expect(result.length).toEqual(1296);
+      expect(result[0]).toEqual('0000');
+      expect(result[1]).toEqual('0001');
+      expect(result[2]).toEqual('0002');
+      expect(result[641]).toEqual('2545');
+      expect(result[643]).toEqual('2551');
+      expect(result[644]).toEqual('2552');
+      expect(result[1295]).toEqual('5555');
+    });
+  });
+
+  describe('getAllKeysRange', () => {
+    it('should return 1296 elems for Mastermind(4, 6) settings', () => {
+      const result: string[] = serviceUnderTest.getAllKeysRange(mastermind46settings);
+
       expect(result.length).toEqual(1296);
       expect(result[0]).toEqual('0000');
       expect(result[1]).toEqual('0001');
@@ -155,8 +172,16 @@ describe('SwaszekSolverService', () => {
 
   describe('prunedKeys', () => {
     const testCases = [
-      { keys: [ '1111', '2222'], answer: '1111', check: { whitePts: 0, blackPts: 0, }, after: [ '2222' ] },
-      { keys: [ '1111', '2222', '2233', '3333'], answer: '1111', check: { whitePts: 0, blackPts: 0, }, after: [ '2222', '2233', '3333' ] },
+      { keys: [ '1111', '2222'],
+        answer: '1111',
+        check: { whitePts: 0, blackPts: 0, },
+        after: [ '2222' ],
+      },
+      { keys: [ '1111', '2222', '2233', '3333'],
+        answer: '1111',
+        check: { whitePts: 0, blackPts: 0, },
+        after: [ '2222', '2233', '3333' ],
+      },
     ];
 
     testCases.forEach((test, index) => {
@@ -172,10 +197,59 @@ describe('SwaszekSolverService', () => {
     });
   });
 
-  // describe('E2E solver test', () => {
-  //   const answerToGuess = '1122';
-  //   for (let i = 0; i < 8; ++i) {
+  xdescribe('Integration test over entire key range, takes some time', () => {
+    const settings = mastermind46settings;
+    const generator = new SwaszekSolverService(settings) as IGenerateKeyRange;
+    const keys =  generator.getAllKeysRange(settings);
 
-  //   }
-  // });
+    describe('verifying results', () => {
+      const MM46roundsLimit = 7;
+
+      keys.forEach(key => {
+        const svc = new SwaszekSolverService(settings);
+        let check = { whitePts: 0, blackPts: 0 };
+        let roundNo = 0;
+        let answer = '';
+
+        for (roundNo = 0; roundNo < MM46roundsLimit; ++roundNo) {
+          answer = svc.getNextGuess(check);
+          check = svc.checkAnswer(answer, key);
+
+          if (answer === key) {
+            break;
+          }
+        }
+        it(`trying to guess ${key} but found ${answer} in  ${roundNo} `, () => {
+          expect(answer).toBe(key);
+          expect(roundNo).toBeLessThanOrEqual(MM46roundsLimit);
+        });
+      });
+    });
+
+    describe('Checking mean rounds to find solution ', () => {
+      const expectedMeanSolvingRounds = 4.67;
+      let meanSolvingRounds = 9000;
+
+      beforeAll(() => {
+        let roundsSum = 0;
+
+        keys.forEach(key => {
+          const svc = new SwaszekSolverService(settings);
+          let check = { whitePts: 0, blackPts: 0 };
+          let answer = '';
+
+          while (answer !== key) {
+            answer = svc.getNextGuess(check);
+            check = svc.checkAnswer(answer, key);
+            ++roundsSum;
+          }
+        });
+        meanSolvingRounds = roundsSum / keys.length;
+      });
+
+      it(`should be under ${expectedMeanSolvingRounds}`, () => {
+        expect(meanSolvingRounds).toBeLessThan(expectedMeanSolvingRounds);
+      });
+    });
+  });
 });

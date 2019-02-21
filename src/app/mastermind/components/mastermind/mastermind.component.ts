@@ -23,7 +23,7 @@ export class MastermindComponent implements OnInit {
     private snackBar: MatSnackBar,
     private checkVerifyService: MastermindCheckVerifyService,
     protected game: MastermindGameService) {
-    this.settings = new GameSettings(5, 8);
+      this.settings = new GameSettings(4, 6);
   }
 
   ngOnInit() {
@@ -35,14 +35,14 @@ export class MastermindComponent implements OnInit {
   }
 
   incrementWhite(): void {
-    if (this.checkVerifyService.IsWhitePtsIncrementable(this.currentRoundCheck(), this.settings)) {
+    if (this.checkVerifyService.IsWhitePtsIncrementable(this.currentRoundCheck(), this.getSettings())) {
       this.game.currentRound.whitePts += 1;
       this.updateLastRoundView();
     }
   }
 
   incrementBlack(): void {
-    if (this.checkVerifyService.IsBlackPtsIncrementable(this.currentRoundCheck(), this.settings)) {
+    if (this.checkVerifyService.IsBlackPtsIncrementable(this.currentRoundCheck(), this.getSettings())) {
       this.game.currentRound.blackPts += 1;
       this.updateLastRoundView();
     }
@@ -77,13 +77,17 @@ export class MastermindComponent implements OnInit {
   }
 
   startNewGame() {
-    this.game.newGame(this.settings);
+    this.game.newGame(this.getSettings());
     this.roundModelViews = [];
     this.cleanScore();
   }
 
   startNextRound() {
     this.game.currentRound = this.game.getNextRound(this.game.currentRound);
+  }
+
+  getSettings(): IGameSettings {
+    return this.settings;
   }
 
   private updateLastRoundView() {

@@ -1,0 +1,22 @@
+.content {
+  min-height: calc(100vh - 70px);
+  max-width: 1000px;
+}
+.footer {
+  height: 50px;
+  float: right;
+}
+
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+}
+
+.mat-fab.mat-accent {
+  background-color: white;
+  color: black;
+}
+
+.mat-fab.mat-warn {
+  background-color: black;
+}

@@ -100,7 +100,7 @@ describe('SwaszekSolverService', () => {
     });
   });
 
-  describe('[Integration test, takes some time] When testing over entire possible key range', () => {
+  xdescribe('[Integration test, takes some time] When testing over entire possible key range', () => {
     const settings = mastermind46settings;
     const utils = new SwaszekSolverService(settings);
     const generator = utils as IGenerateKeyRange;

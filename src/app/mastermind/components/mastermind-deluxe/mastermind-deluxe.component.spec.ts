@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MastermindComponent } from './mastermind.component';
+import { MastermindDeluxeComponent } from './mastermind-deluxe.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
 import { IMastermindGameService, MastermindGameService } from '../../services/mastermind-game.service';
 
-describe('MastermindComponent', () => {
-  let component: MastermindComponent;
-  let fixture: ComponentFixture<MastermindComponent>;
+describe('MastermindDeluxeComponent', () => {
+  let component: MastermindDeluxeComponent;
+  let fixture: ComponentFixture<MastermindDeluxeComponent>;
 
   let isBlackPtsIncrementable = false;
   let isWhitePtsIncrementable = false;
@@ -49,7 +49,7 @@ describe('MastermindComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MastermindComponent ],
+      declarations: [ MastermindDeluxeComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers : [
         { provide: MatSnackBar,  useValue: snackbarMock, },
@@ -58,7 +58,7 @@ describe('MastermindComponent', () => {
       ]
     })
     .compileComponents();
-    fixture = TestBed.createComponent(MastermindComponent);
+    fixture = TestBed.createComponent(MastermindDeluxeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
@@ -67,18 +67,18 @@ describe('MastermindComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('settings should be Mastermind(4, 6)', () => {
+  describe('settings should be Mastermind(5, 8)', () => {
     let settings;
     beforeEach(() => {
       settings = component.getSettings();
     });
 
-    it('digits should be 4', () => {
-      expect(settings.digits).toEqual(4);
+    it('digits should be 5', () => {
+      expect(settings.digits).toEqual(5);
     });
 
-    it('colors should be 6', () => {
-      expect(settings.colors).toEqual(6);
+    it('colors should be 8', () => {
+      expect(settings.colors).toEqual(8);
     });
   });
 

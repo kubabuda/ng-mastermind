@@ -13,7 +13,7 @@ export interface ICheckAnswers {
 }
 
 export interface IPruneKeys {
-  keysPossibleAfterGuess(possibleKeys: string[], keyGuess: string, check: IMastermindAnswerCheck): string[];
+  keysPossibleAfterGuess(possibleKeys: string[], guessedKey: string, guessKeyCheck: IMastermindAnswerCheck): string[];
 }
 
 
@@ -78,11 +78,11 @@ export abstract class ASolverService implements IGenerateKeyRange {
     return result;
   }
 
-  keysPossibleAfterGuess(possibleKeys: string[], keyGuess: string, check: IMastermindAnswerCheck): string[] {
+  keysPossibleAfterGuess(possibleKeys: string[], guessedKey: string, guessKeyCheck: IMastermindAnswerCheck): string[] {
     const result = [];
 
     possibleKeys.forEach(key => {
-      if (this.isAnswerCheckResultEqual(key, keyGuess, check)) {
+      if (this.isAnswerCheckResultEqual(key, guessedKey, guessKeyCheck)) {
         result.push(key);
       }
     });

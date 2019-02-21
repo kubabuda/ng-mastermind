@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { SwaszekSolverService } from './swaszek-solver.service';
+import { SwaszekSolverService, ISolveMastermind } from './swaszek-solver.service';
 import { GameSettings } from '../../models/game.settings.model';
-import { IGenerateKeyRange } from './asolver.service';
+import { IGenerateKeyRange, ICheckAnswers } from './asolver.service';
 
 describe('SwaszekSolverService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -69,7 +69,7 @@ describe('SwaszekSolverService', () => {
       expect(second).toBe('0345');
     });
 
-    it('should return 0345 for 4wh 0bl ', () => {
+    it('should return 0345 for 4 white 0 black ', () => {
       // arrange
       const prevCheck = { whitePts: 4, blackPts: 0 };
       // act
@@ -80,7 +80,6 @@ describe('SwaszekSolverService', () => {
   });
 
   describe('checkAnswer', () => {
-
     const testCases = [
       { answer1: '1111', answer2: '2222', white: 0, black: 0 },
       { answer1: '2222', answer2: '1111', white: 0, black: 0 },
@@ -101,59 +100,40 @@ describe('SwaszekSolverService', () => {
     });
   });
 
-  xdescribe('Integration test over entire key range, takes some time', () => {
+  describe('[Integration test, takes some time] When testing over entire possible key range', () => {
     const settings = mastermind46settings;
-    const generator = new SwaszekSolverService(settings) as IGenerateKeyRange;
+    const utils = new SwaszekSolverService(settings);
+    const generator = utils as IGenerateKeyRange;
+    const answerChecker = utils as ICheckAnswers;
+    const MM46roundsLimit = 7;
+    const expectedMeanSolvingRounds = 4.67;
+    let roundsSum = 0;
     const keys =  generator.getAllKeysRange(settings);
+    
+    keys.forEach(key => {
+      const svc = new SwaszekSolverService(settings) as ISolveMastermind;
+      let check = { whitePts: 0, blackPts: 0 };
+      let roundNo = 0;
+      let answer = '';
 
-    describe('verifying results', () => {
-      const MM46roundsLimit = 7;
+      while (answer !== key) {
+        answer = svc.getNextGuess(check);
+        check = answerChecker.checkAnswer(answer, key);
+        ++roundsSum;
+        ++roundNo;
+      }
+      it(`answer for ${key} should be found properly (was ${answer})`, () => {
+        expect(answer).toBe(key);
+      });
 
-      keys.forEach(key => {
-        const svc = new SwaszekSolverService(settings);
-        let check = { whitePts: 0, blackPts: 0 };
-        let roundNo = 0;
-        let answer = '';
-
-        for (roundNo = 0; roundNo < MM46roundsLimit; ++roundNo) {
-          answer = svc.getNextGuess(check);
-          check = svc.checkAnswer(answer, key);
-
-          if (answer === key) {
-            break;
-          }
-        }
-        it(`trying to guess ${key} but found ${answer} in  ${roundNo} `, () => {
-          expect(answer).toBe(key);
-          expect(roundNo).toBeLessThanOrEqual(MM46roundsLimit);
-        });
+      it(`answer for ${key} should be found in at most ${MM46roundsLimit} (was ${roundNo})`, () => {
+        expect(roundNo).toBeLessThanOrEqual(MM46roundsLimit);
       });
     });
 
-    describe('Checking mean rounds to find solution ', () => {
-      const expectedMeanSolvingRounds = 4.67;
-      let meanSolvingRounds = 9000;
-
-      beforeAll(() => {
-        let roundsSum = 0;
-
-        keys.forEach(key => {
-          const svc = new SwaszekSolverService(settings);
-          let check = { whitePts: 0, blackPts: 0 };
-          let answer = '';
-
-          while (answer !== key) {
-            answer = svc.getNextGuess(check);
-            check = svc.checkAnswer(answer, key);
-            ++roundsSum;
-          }
-        });
-        meanSolvingRounds = roundsSum / keys.length;
-      });
-
-      it(`should be under ${expectedMeanSolvingRounds}`, () => {
-        expect(meanSolvingRounds).toBeLessThan(expectedMeanSolvingRounds);
-      });
+    it(`mean rounds to solution should be under ${expectedMeanSolvingRounds}`, () => {
+      const meanSolvingRounds = roundsSum / keys.length;
+      expect(meanSolvingRounds).toBeLessThan(expectedMeanSolvingRounds);
     });
   });
 });

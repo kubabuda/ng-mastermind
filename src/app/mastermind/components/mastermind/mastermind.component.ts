@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { RoundModelView, IRoundModelView } from '../../models/round.view.model';
 import { IGameSettings, GameSettings } from '../../models/game.settings.model';
 import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
-import { IMastermindGameService, MastermindGameService } from '../../services/mastermind-game.service';
+import { MastermindGameService } from '../../services/mastermind-game.service';
 import { IMastermindAnswerCheck } from '../../models/answer-check.model';
 
 
@@ -16,14 +16,13 @@ import { IMastermindAnswerCheck } from '../../models/answer-check.model';
 export class MastermindComponent implements OnInit {
 
   roundModelViews: IRoundModelView[];
-  protected game: IMastermindGameService;
   protected settings: IGameSettings;
 
   constructor(
     private snackBar: MatSnackBar,
-    private checkVerifyService: MastermindCheckVerifyService) {
+    private checkVerifyService: MastermindCheckVerifyService,
+    protected game: MastermindGameService) {
     this.settings = new GameSettings(5, 8);
-    this.game = new MastermindGameService(checkVerifyService);
   }
 
   ngOnInit() {

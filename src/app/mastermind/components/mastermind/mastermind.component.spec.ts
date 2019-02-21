@@ -4,6 +4,7 @@ import { MastermindComponent } from './mastermind.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { MastermindCheckVerifyService } from '../../services/mastermind-check-verify.service';
+import { IMastermindGameService, MastermindGameService } from '../../services/mastermind-game.service';
 
 describe('MastermindComponent', () => {
   let component: MastermindComponent;
@@ -24,10 +25,27 @@ describe('MastermindComponent', () => {
     }
   };
 
+  const gameMock: IMastermindGameService = {
+    currentRound: { answer: '0123', whitePts: 0, blackPts: 0, },
+    roundNo: 1,
+    newGame() {
+      this.roundNo = 1;
+    },
+    getNextRound(): any {
+      ++this.roundNo;
+      return this.currentRound;
+    },
+    isGameWon(): boolean {
+      return isGameWon;
+    }
+  };
+
   let wasSnackbarOpen = false;
-  const snackbarMock = { open() {
-    wasSnackbarOpen = true;
-  } };
+  const snackbarMock = { 
+    open() {
+      wasSnackbarOpen = true;
+    }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,7 +53,8 @@ describe('MastermindComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
       providers : [
         { provide: MatSnackBar,  useValue: snackbarMock, },
-        { provide: MastermindCheckVerifyService, useValue: checkVerifySvcMock }
+        { provide: MastermindGameService, useValue: gameMock, },
+        { provide: MastermindCheckVerifyService, useValue: checkVerifySvcMock, },
       ]
     })
     .compileComponents();
@@ -108,6 +127,7 @@ describe('MastermindComponent', () => {
 
     describe('after checkScore when game is not won', () => {
       beforeAll(() => {
+        isGameWon = true;
         wasSnackbarOpen = false;
         expect(component.roundModelViews.length).toBe(1);
         component.checkScore();
@@ -119,6 +139,8 @@ describe('MastermindComponent', () => {
 
       describe('after second checkScore', () => {
         beforeEach(() => {
+          isGameWon = false;
+          wasSnackbarOpen = false;
           component.checkScore();
         });
 

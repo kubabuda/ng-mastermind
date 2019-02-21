@@ -41,7 +41,7 @@ describe('MastermindComponent', () => {
   };
 
   let wasSnackbarOpen = false;
-  const snackbarMock = { 
+  const snackbarMock = {
     open() {
       wasSnackbarOpen = true;
     }

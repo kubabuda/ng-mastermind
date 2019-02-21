@@ -109,7 +109,7 @@ describe('SwaszekSolverService', () => {
     const expectedMeanSolvingRounds = 4.67;
     let roundsSum = 0;
     const keys =  generator.getAllKeysRange(settings);
-    
+
     keys.forEach(key => {
       const svc = new SwaszekSolverService(settings) as ISolveMastermind;
       let check = { whitePts: 0, blackPts: 0 };

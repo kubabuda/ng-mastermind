@@ -15,8 +15,9 @@ import { IMastermindAnswerCheck } from '../../models/answer-check.model';
 })
 export class MastermindComponent implements OnInit {
 
-  roundModelViews: IRoundModelView[];
   protected settings: IGameSettings;
+
+  public roundModelViews: IRoundModelView[];
 
   constructor(
     private snackBar: MatSnackBar,

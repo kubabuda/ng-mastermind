@@ -14,6 +14,7 @@ export class RoundModelView implements IRoundModelView {
     private availableAswerColors = [ 'saddlebrown', 'crimson', 'darkorange', 'gold', 'darkgreen', 'darkblue', 'white', 'black' ];
 
     constructor(model: IRoundModel) {
+      // TODO works but is hacky, maybe create roundView builder service
       const codeLength = model.answer.length;
       if (codeLength < (model.whitePts + model.blackPts)
        || codeLength === model.whitePts - 1 && model.blackPts === 1) {

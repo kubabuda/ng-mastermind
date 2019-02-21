@@ -21,7 +21,7 @@ export class RoundStateComponent implements OnInit {
     this.lastCheckVisibility = this.get5thCheckVisibility(this.modelView);
   }
 
-  // TODO works but is hacky
+  // TODO works but is hacky, maybe create roundView builder service
   private is5DigitRound(modelView: IRoundModelView) {
     return modelView.answerColors.length > 4
       && modelView.checkVisibility.length > 4;
@@ -29,15 +29,14 @@ export class RoundStateComponent implements OnInit {
 
   get5thDigitVisibility(modelView: IRoundModelView): string {
     if (this.is5DigitRound(modelView)) {
-        return this.visible;
+      return this.visible;
     }
     return this.hidden;
   }
 
   get5thCheckVisibility(modelView: IRoundModelView): string {
-    if (this.is5DigitRound(modelView)
-      && modelView.checkVisibility[4] === this.visible) {
-        return this.visible;
+    if (this.is5DigitRound(modelView)) {
+      return modelView.checkVisibility[4];
     }
     return this.hidden;
   }

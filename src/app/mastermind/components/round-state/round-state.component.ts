@@ -7,13 +7,38 @@ import { IRoundModelView } from '../../models/round.view.model';
   styleUrls: ['./round-state.component.css']
 })
 export class RoundStateComponent implements OnInit {
+  visible = 'visible';
+  hidden = 'hidden';
 
   @Input()
   modelView: IRoundModelView;
-
+  lastColorVisibility = this.hidden;
+  lastCheckVisibility = this.hidden;
   constructor() { }
 
   ngOnInit() {
+    this.lastColorVisibility = this.get5thDigitVisibility(this.modelView);
+    this.lastCheckVisibility = this.get5thCheckVisibility(this.modelView);
   }
 
+  // TODO works but is hacky
+  private is5DigitRound(modelView: IRoundModelView) {
+    return modelView.answerColors.length > 4
+      && modelView.checkVisibility.length > 4;
+  }
+
+  get5thDigitVisibility(modelView: IRoundModelView): string {
+    if (this.is5DigitRound(modelView)) {
+        return this.visible;
+    }
+    return this.hidden;
+  }
+
+  get5thCheckVisibility(modelView: IRoundModelView): string {
+    if (this.is5DigitRound(modelView)
+      && modelView.checkVisibility[4] === this.visible) {
+        return this.visible;
+    }
+    return this.hidden;
+  }
 }

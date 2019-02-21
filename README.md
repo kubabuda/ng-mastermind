@@ -43,5 +43,5 @@ Example with most rounds - 9 - is 52451
  - randomized algo
  - better algo than naive
  - gesture support
- - MM(4,6) and MM(5,8) modes with GUIs
+ - GUI to switch between MM(4,6) and MM(5,8) modes
  - instructions page
